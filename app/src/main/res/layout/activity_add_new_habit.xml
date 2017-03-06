@@ -25,13 +25,6 @@
         android:hint="Habit name"
         android:textSize="24sp"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"/>
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,18 +33,12 @@
         android:lines="4"
         android:gravity="top"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Habit color"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:paddingLeft="4dp"/>
 
     <Spinner
         android:id="@+id/spinner1"
