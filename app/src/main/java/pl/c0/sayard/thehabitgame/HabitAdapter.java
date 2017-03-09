@@ -16,6 +16,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
     private String[] mDataSet;
     private Context mContext;
+    private Toast toast;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -43,15 +44,21 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
-                if(position != RecyclerView.NO_POSITION)
-                {
-                    String toastText = "#" + position + " " + mDataSet[position];
-                    Toast.makeText(mContext, toastText, Toast.LENGTH_SHORT).show();
-                }
+                String toastText = "#" + position + " " + mDataSet[position];
+                showToast(toastText);
             }
         });
 
         return viewHolder;
+    }
+
+    private void showToast(String toastText) {
+        try{ toast.getView().isShown();
+            toast.setText(toastText);
+        } catch (Exception e) {
+            toast = Toast.makeText(mContext, toastText, Toast.LENGTH_SHORT);
+        }
+        toast.show();
     }
 
     @Override
