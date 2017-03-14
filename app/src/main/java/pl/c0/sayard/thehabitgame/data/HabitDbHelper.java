@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class HabitDbHelper extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "HabitDB.db";
 
     public HabitDbHelper(Context context){
@@ -19,12 +19,23 @@ public class HabitDbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(HabitContract.HabitEntry.SQL_CREATE_HABITS);
+        final String SQL_CREATE_HABITS =
+                "CREATE TABLE " + HabitContract.HabitEntry.TABLE_NAME + " (" +
+                        HabitContract.HabitEntry._ID + " INTEGER PRIMARY KEY," +
+                        HabitContract.HabitEntry.COLUM_NAME + " TEXT NOT NULL," +
+                        HabitContract.HabitEntry.COLUM_DESCRIPTION + " TEXT," +
+                        HabitContract.HabitEntry.COLUMN_COLOR + " INTEGER NOT NULL," +
+                        HabitContract.HabitEntry.COLUMN_DAYS_LEFT + " INTEGER DEFAULT 66);";
+
+        db.execSQL(SQL_CREATE_HABITS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(HabitContract.HabitEntry.SQL_DELETE_HABITS);
+        final String SQL_DELETE_HABITS =
+                "DROP TABLE IF EXISTS " + HabitContract.HabitEntry.TABLE_NAME;
+
+        db.execSQL(SQL_DELETE_HABITS);
         onCreate(db);
     }
     @Override

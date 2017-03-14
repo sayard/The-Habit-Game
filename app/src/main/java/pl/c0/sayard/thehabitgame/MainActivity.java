@@ -1,6 +1,8 @@
 package pl.c0.sayard.thehabitgame;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import pl.c0.sayard.thehabitgame.data.HabitContract;
+import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
 import pl.c0.sayard.thehabitgame.data.SampleData;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,10 +23,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private SQLiteDatabase mDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -40,8 +47,24 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new HabitAdapter(SampleData.SAMPLE_DATA, this);
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        mDb = dbHelper.getWritableDatabase();
+        SampleData.insertSampleData(mDb);
+        Cursor cursor = getAllHabits();
+
+        mAdapter = new HabitAdapter(this, cursor);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private Cursor getAllHabits(){
+        String[] columns = {HabitContract.HabitEntry.COLUM_NAME, HabitContract.HabitEntry.COLUMN_COLOR};
+        return mDb.query(HabitContract.HabitEntry.TABLE_NAME,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                null);
     }
 
     @Override
