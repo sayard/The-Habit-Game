@@ -20,13 +20,13 @@ public class SampleData {
         List<ContentValues> habitList = new ArrayList<>();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(HabitContract.HabitEntry.COLUM_NAME, "Reading");
-        contentValues.put(HabitContract.HabitEntry.COLUM_DESCRIPTION, "Reade every 2 days");
+        contentValues.put(HabitContract.HabitEntry.COLUMN_NAME, "Reading");
+        contentValues.put(HabitContract.HabitEntry.COLUMN_DESCRIPTION, "Read every 2 days");
         contentValues.put(HabitContract.HabitEntry.COLUMN_COLOR, 1);
         habitList.add(contentValues);
 
         contentValues = new ContentValues();
-        contentValues.put(HabitContract.HabitEntry.COLUM_NAME, "Hit the gym");
+        contentValues.put(HabitContract.HabitEntry.COLUMN_NAME, "Hit the gym");
         contentValues.put(HabitContract.HabitEntry.COLUMN_COLOR,2);
         habitList.add(contentValues);
 

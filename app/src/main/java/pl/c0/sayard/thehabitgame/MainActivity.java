@@ -48,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         HabitDbHelper dbHelper = new HabitDbHelper(this);
-        mDb = dbHelper.getWritableDatabase();
-        SampleData.insertSampleData(mDb);
+        mDb = dbHelper.getReadableDatabase();
         Cursor cursor = getAllHabits();
 
         mAdapter = new HabitAdapter(this, cursor);
@@ -57,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Cursor getAllHabits(){
-        String[] columns = {HabitContract.HabitEntry.COLUM_NAME, HabitContract.HabitEntry.COLUMN_COLOR};
         return mDb.query(HabitContract.HabitEntry.TABLE_NAME,
-                columns,
+                null,
                 null,
                 null,
                 null,

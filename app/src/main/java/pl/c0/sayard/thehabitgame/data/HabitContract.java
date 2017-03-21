@@ -11,9 +11,10 @@ public final class HabitContract {
 
     public static class HabitEntry implements BaseColumns{
         public static final String TABLE_NAME = "habits";
-        public static final String COLUM_NAME = "name";
-        public static final String COLUM_DESCRIPTION = "description";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_DESCRIPTION = "description";
         public static final String COLUMN_COLOR = "color";
+        public static final String COLUMN_STREAK = "streak";
         public static final String COLUMN_DAYS_LEFT = "days_left";
     }
 }
