@@ -1,10 +1,12 @@
 package pl.c0.sayard.thehabitgame;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +54,31 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         if(!mCursor.moveToPosition(position))
             return;
 
-        String name = mCursor.getString(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUM_NAME));
+        final int _ID = mCursor.getInt(mCursor.getColumnIndex(HabitContract.HabitEntry._ID));
+        final String NAME = mCursor.getString(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_NAME));
+        final int COLOR = mCursor.getInt(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_COLOR));
+        final String DESCRIPTION = mCursor.getString(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DESCRIPTION));
+        final int STREAK = mCursor.getInt(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_STREAK));
+        final String DAYS_LEFT = mCursor.getString(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DAYS_LEFT));
+
         int color = mCursor.getInt(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_COLOR));
 
-        holder.nameTextView.setText(name);
+        holder.nameTextView.setText(NAME);
+
+        holder.nameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, HabitDetailActivity.class);
+                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_ID), _ID);
+                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_NAME), NAME);
+                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_COLOR), COLOR);
+                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_DESCRIPTION),DESCRIPTION);
+                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_STREAK), STREAK);
+                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_DAYS_LEFT), DAYS_LEFT);
+                mContext.startActivity(intent);
+            }
+        });
+
         switch (color)
         {
             case 1:
