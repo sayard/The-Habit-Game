@@ -22,12 +22,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/add_new_habit_name"
         android:hint="@string/habit_name"
         android:textSize="24sp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/add_new_habit_desc"
         android:hint="@string/description_optional"
         android:textSize="24sp"
         android:lines="4"
@@ -57,7 +59,8 @@
             android:background="?attr/colorPrimary"
             android:textColor="@android:color/white"
             android:text="@string/apply"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:onClick="addNewHabit"/>
     </RelativeLayout>
 
 
