@@ -101,7 +101,7 @@ public class HabitDetailActivity extends AppCompatActivity {
             return false;
 
         HabitDbHelper helper = new HabitDbHelper(this);
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db = helper.getReadableDatabase();
 
         return db.delete(HabitContract.HabitEntry.TABLE_NAME,
                 HabitContract.HabitEntry._ID + " = " + detailId,
