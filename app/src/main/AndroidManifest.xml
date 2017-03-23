@@ -18,10 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddNewHabitActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".HabitDetailActivity"
-            android:launchMode="singleTop"></activity>
+        <activity
+            android:name=".AddNewHabitActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".HabitDetailActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".UpdateHabitActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
