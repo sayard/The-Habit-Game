@@ -2,10 +2,12 @@ package pl.c0.sayard.thehabitgame;
 
 import android.app.ActionBar;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -84,12 +86,34 @@ public class HabitDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_delete_habit){
-            if(deleteHabitFromDatabase()){
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }else{
-                Toast.makeText(this, "Deleting has failed. Please try again.", Toast.LENGTH_SHORT).show();
-            }
+
+            DialogInterface.OnClickListener dialogClickListenter = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which)
+                    {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            if(deleteHabitFromDatabase()){
+                                Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }else{
+                                Toast.makeText(HabitDetailActivity.this, "Deleting has failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            return;
+                        default:
+                            return;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to delete this habit?")
+                    .setPositiveButton("Yes", dialogClickListenter)
+                    .setNegativeButton("No", dialogClickListenter)
+                    .show();
+
             return true;
         }
 
