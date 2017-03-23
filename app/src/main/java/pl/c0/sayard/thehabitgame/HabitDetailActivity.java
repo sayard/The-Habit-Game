@@ -115,6 +115,10 @@ public class HabitDetailActivity extends AppCompatActivity {
                     .show();
 
             return true;
+        }else if(id == R.id.action_update_habit){
+            Intent intent = new Intent(this, UpdateHabitActivity.class);
+            intent.putExtra(this.getString(R.string.EXTRA_UPDATE_ID), detailId);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -149,11 +153,11 @@ public class HabitDetailActivity extends AppCompatActivity {
         HabitDbHelper helper = new HabitDbHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        String columns[] = {HabitContract.HabitEntry.COLUMN_STREAK,
+        String columnsToUpdate[] = {HabitContract.HabitEntry.COLUMN_STREAK,
                     HabitContract.HabitEntry.COLUMN_DAYS_LEFT};
 
         Cursor cursor = db.query(HabitContract.HabitEntry.TABLE_NAME,
-                columns,
+                columnsToUpdate,
                 HabitContract.HabitEntry._ID + " = " +detailId,
                 null,
                 null,
