@@ -87,7 +87,7 @@ public class HabitDetailActivity extends AppCompatActivity {
 
         if(id == R.id.action_delete_habit){
 
-            DialogInterface.OnClickListener dialogClickListenter = new DialogInterface.OnClickListener() {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which)
@@ -110,14 +110,17 @@ public class HabitDetailActivity extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Are you sure you want to delete this habit?")
-                    .setPositiveButton("Yes", dialogClickListenter)
-                    .setNegativeButton("No", dialogClickListenter)
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener)
                     .show();
 
             return true;
         }else if(id == R.id.action_update_habit){
             Intent intent = new Intent(this, UpdateHabitActivity.class);
             intent.putExtra(this.getString(R.string.EXTRA_UPDATE_ID), detailId);
+            startActivity(intent);
+        }else if(id == R.id.action_notification_settings){
+            Intent intent = new Intent(this, HabitNotificationsActivity.class);
             startActivity(intent);
         }
 

@@ -18,4 +18,12 @@
     <string name="action_delete_habit">Delete habit</string>
     <string name="done_for_today">Done for today</string>
     <string name="update_habit">Update habit</string>
+    <string name="notifications">Notifications</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 </resources>
