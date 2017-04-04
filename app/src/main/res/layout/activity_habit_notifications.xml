@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/monday"
             android:textSize="24sp"
@@ -24,7 +24,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="24sp"
-            android:id="@+id/notification_monday_tv"/>
+            android:text="16:00"
+            android:id="@+id/notification_monday_tv"
+            android:onClick="setTime"/>
 
     </RelativeLayout>
 
@@ -41,7 +43,7 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tuesday"
             android:textSize="24sp"
@@ -52,7 +54,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="24sp"
-            android:id="@+id/notification_tuesday_tv"/>
+            android:text="16:00"
+            android:id="@+id/notification_tuesday_tv"
+            android:onClick="setTime"/>
 
     </RelativeLayout>
 
@@ -69,7 +73,7 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/wednesday"
             android:textSize="24sp"
@@ -80,7 +84,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="24sp"
-            android:id="@+id/notification_wednesday_tv"/>
+            android:text="16:00"
+            android:id="@+id/notification_wednesday_tv"
+            android:onClick="setTime"/>
 
     </RelativeLayout>
 
@@ -97,7 +103,7 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/thursday"
             android:textSize="24sp"
@@ -108,7 +114,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="24sp"
-            android:id="@+id/notification_thursday_tv"/>
+            android:text="16:00"
+            android:id="@+id/notification_thursday_tv"
+            android:onClick="setTime"/>
 
     </RelativeLayout>
 
@@ -125,7 +133,7 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/friday"
             android:textSize="24sp"
@@ -136,7 +144,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="24sp"
-            android:id="@+id/notification_friday_tv"/>
+            android:text="16:00"
+            android:id="@+id/notification_friday_tv"
+            android:onClick="setTime"/>
 
     </RelativeLayout>
 
@@ -153,7 +163,7 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/saturday"
             android:textSize="24sp"
@@ -164,7 +174,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="24sp"
-            android:id="@+id/notification_saturday_tv"/>
+            android:text="16:00"
+            android:id="@+id/notification_saturday_tv"
+            android:onClick="setTime"/>
 
     </RelativeLayout>
 
@@ -181,7 +193,7 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sunday"
             android:textSize="24sp"
@@ -192,7 +204,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="24sp"
-            android:id="@+id/notification_sunday_tv"/>
+            android:text="16:00"
+            android:id="@+id/notification_sunday_tv"
+            android:onClick="setTime"/>
 
         <Button
             android:layout_width="match_parent"

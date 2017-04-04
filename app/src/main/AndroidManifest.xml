@@ -33,7 +33,11 @@
             android:name=".HabitNotificationsActivity"
             android:launchMode="singleTop"/>
 
-        <receiver android:name=".utilities.NotificationReceiver"/>
+        <receiver android:name=".utilities.NotificationReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
