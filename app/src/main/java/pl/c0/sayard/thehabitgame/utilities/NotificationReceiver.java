@@ -18,9 +18,7 @@ public class NotificationReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("onReceive");
         final int NOTIFICATION_ID = intent.getIntExtra(context.getString(R.string.EXTRA_NOTIFICATION_ID), -1);
-        System.out.println(NOTIFICATION_ID);
         String title;
         if(NOTIFICATION_ID == -1){
             title = "Fail" ;
@@ -40,7 +38,7 @@ public class NotificationReceiver extends BroadcastReceiver{
                 .setSmallIcon(android.R.drawable.arrow_up_float)
                 .setContentTitle(title)
                 .setContentText("It's time for " + title + " " + NOTIFICATION_ID)
-                .setVibrate(new long[] {1000})
+                .setVibrate(new long[] { 500, 500, 500, 500, 500 })
                 .setAutoCancel(true);
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());

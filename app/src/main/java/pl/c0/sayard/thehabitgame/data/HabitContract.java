@@ -16,5 +16,19 @@ public final class HabitContract {
         public static final String COLUMN_COLOR = "color";
         public static final String COLUMN_STREAK = "streak";
         public static final String COLUMN_DAYS_LEFT = "days_left";
+        public static final String COLUMN_IS_MONDAY_NOTIFICATION_ACTIVE = "is_monday_notification_active";
+        public static final String COLUMN_IS_TUESDAY_NOTIFICATION_ACTIVE = "is_tuesday_notification_active";
+        public static final String COLUMN_IS_WEDNESDAY_NOTIFICATION_ACTIVE = "is_wednesday_notification_active";
+        public static final String COLUMN_IS_THURSDAY_NOTIFICATION_ACTIVE = "is_thursday_notification_active";
+        public static final String COLUMN_IS_FRIDAY_NOTIFICATION_ACTIVE = "is_friday_notification_active";
+        public static final String COLUMN_IS_SATURDAY_NOTIFICATION_ACTIVE = "is_saturday_notification_active";
+        public static final String COLUMN_IS_SUNDAY_NOTIFICATION_ACTIVE = "is_sunday_notification_active";
+        public static final String COLUMN_MONDAY_NOTIFICATION_HOUR = "monday_notification_hour";
+        public static final String COLUMN_TUESDAY_NOTIFICATION_HOUR = "tuesday_notification_hour";
+        public static final String COLUMN_WEDNESDAY_NOTIFICATION_HOUR = "wednesday_notification_hour";
+        public static final String COLUMN_THURSDAY_NOTIFICATION_HOUR = "thursday_notification_hour";
+        public static final String COLUMN_FRIDAY_NOTIFICATION_HOUR = "friday_notification_hour";
+        public static final String COLUMN_SATURDAY_NOTIFICATION_HOUR = "saturday_notification_hour";
+        public static final String COLUMN_SUNDAY_NOTIFICATION_HOUR = "sunday_notification_hour";
     }
 }

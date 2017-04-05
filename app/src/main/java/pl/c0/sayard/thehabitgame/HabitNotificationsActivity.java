@@ -3,7 +3,10 @@ package pl.c0.sayard.thehabitgame;
 import android.app.AlarmManager;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +16,8 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import pl.c0.sayard.thehabitgame.data.HabitContract;
+import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
 import pl.c0.sayard.thehabitgame.utilities.NotificationReceiver;
 import pl.c0.sayard.thehabitgame.utilities.TimePickerFragment;
 
@@ -28,6 +33,17 @@ public class HabitNotificationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_notifications);
 
+        assignWeekDaysAndHoursAndMinutes();
+
+        Intent intent = getIntent();
+        habitId = intent.getIntExtra(getString(R.string.EXTRA_DETAIL_ID), -1);
+        habitName = intent.getStringExtra(getString(R.string.EXTRA_DETAIL_NAME));
+
+        setCheckBoxesStatus();
+        setHoursAndMinutes();
+    }
+
+    public void assignWeekDaysAndHoursAndMinutes(){
         weekDays[0] = (CheckBox) findViewById(R.id.notification_monday_check_box);
         weekDays[1] = (CheckBox) findViewById(R.id.notification_tuesday_check_box);
         weekDays[2] = (CheckBox) findViewById(R.id.notification_wednesday_check_box);
@@ -35,10 +51,6 @@ public class HabitNotificationsActivity extends AppCompatActivity {
         weekDays[4] = (CheckBox) findViewById(R.id.notification_friday_check_box);
         weekDays[5] = (CheckBox) findViewById(R.id.notification_saturday_check_box);
         weekDays[6] = (CheckBox) findViewById(R.id.notification_sunday_check_box);
-
-        Intent intent = getIntent();
-        habitId = intent.getIntExtra(getString(R.string.EXTRA_DETAIL_ID), -1);
-        habitName = intent.getStringExtra(getString(R.string.EXTRA_DETAIL_NAME));
 
         hoursAndMinutes[0] = (TextView) findViewById(R.id.notification_monday_tv);
         hoursAndMinutes[1] = (TextView) findViewById(R.id.notification_tuesday_tv);
@@ -49,21 +61,340 @@ public class HabitNotificationsActivity extends AppCompatActivity {
         hoursAndMinutes[6] = (TextView) findViewById(R.id.notification_sunday_tv);
     }
 
-    public void applyNotifications(View view) {
-        for(int i=1; i<2; i++){
-            int notificationId = habitId + (1000 * (i+1));
-            if(weekDays[i].isChecked()){
-                String hourString = hoursAndMinutes[i].getText().toString().substring(0,2);
-                int hour = Integer.valueOf(hourString);
-                String minuteString = hoursAndMinutes[i].getText().toString().substring(3,5);
-                int minute = Integer.valueOf(minuteString);
-                startNotification(notificationId, i, hour, minute);
-            }else{
-                stopNotification(notificationId);
-            }
+    public void setCheckBoxesStatus(){
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String notificationsStatusColumns[] = {
+                HabitContract.HabitEntry.COLUMN_IS_MONDAY_NOTIFICATION_ACTIVE,
+                HabitContract.HabitEntry.COLUMN_IS_TUESDAY_NOTIFICATION_ACTIVE,
+                HabitContract.HabitEntry.COLUMN_IS_WEDNESDAY_NOTIFICATION_ACTIVE,
+                HabitContract.HabitEntry.COLUMN_IS_THURSDAY_NOTIFICATION_ACTIVE,
+                HabitContract.HabitEntry.COLUMN_IS_FRIDAY_NOTIFICATION_ACTIVE,
+                HabitContract.HabitEntry.COLUMN_IS_SATURDAY_NOTIFICATION_ACTIVE,
+                HabitContract.HabitEntry.COLUMN_IS_SUNDAY_NOTIFICATION_ACTIVE
+        };
+
+        Cursor notificationsStatusCursor = db.query(
+                HabitContract.HabitEntry.TABLE_NAME,
+                notificationsStatusColumns,
+                HabitContract.HabitEntry._ID + "=" + habitId,
+                null,
+                null,
+                null,
+                null
+        );
+
+        notificationsStatusCursor.moveToFirst();
+
+        if(notificationsStatusCursor.getInt(notificationsStatusCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_IS_MONDAY_NOTIFICATION_ACTIVE)) == 1){
+            weekDays[0].setChecked(true);
+        }else{
+            weekDays[0].setChecked(false);
         }
-        Toast.makeText(this, "Notifications set", Toast.LENGTH_SHORT).show();
-        finish();
+
+        if(notificationsStatusCursor.getInt(notificationsStatusCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_IS_TUESDAY_NOTIFICATION_ACTIVE)) == 1){
+            weekDays[1].setChecked(true);
+        }else{
+            weekDays[1].setChecked(false);
+        }
+
+        if(notificationsStatusCursor.getInt(notificationsStatusCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_IS_WEDNESDAY_NOTIFICATION_ACTIVE)) == 1){
+            weekDays[2].setChecked(true);
+        }else{
+            weekDays[2].setChecked(false);
+        }
+
+        if(notificationsStatusCursor.getInt(notificationsStatusCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_IS_THURSDAY_NOTIFICATION_ACTIVE)) == 1){
+            weekDays[3].setChecked(true);
+        }else{
+            weekDays[3].setChecked(false);
+        }
+
+        if(notificationsStatusCursor.getInt(notificationsStatusCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_IS_FRIDAY_NOTIFICATION_ACTIVE)) == 1){
+            weekDays[4].setChecked(true);
+        }else{
+            weekDays[4].setChecked(false);
+        }
+
+        if(notificationsStatusCursor.getInt(notificationsStatusCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_IS_SATURDAY_NOTIFICATION_ACTIVE)) == 1){
+            weekDays[5].setChecked(true);
+        }else{
+            weekDays[5].setChecked(false);
+        }
+
+        if(notificationsStatusCursor.getInt(notificationsStatusCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_IS_SUNDAY_NOTIFICATION_ACTIVE)) == 1){
+            weekDays[6].setChecked(true);
+        }else{
+            weekDays[6].setChecked(false);
+        }
+
+        notificationsStatusCursor.close();
+    }
+
+    public void setHoursAndMinutes(){
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String notificationsHoursColumns[] = {
+                HabitContract.HabitEntry.COLUMN_MONDAY_NOTIFICATION_HOUR,
+                HabitContract.HabitEntry.COLUMN_TUESDAY_NOTIFICATION_HOUR,
+                HabitContract.HabitEntry.COLUMN_WEDNESDAY_NOTIFICATION_HOUR,
+                HabitContract.HabitEntry.COLUMN_THURSDAY_NOTIFICATION_HOUR,
+                HabitContract.HabitEntry.COLUMN_FRIDAY_NOTIFICATION_HOUR,
+                HabitContract.HabitEntry.COLUMN_SATURDAY_NOTIFICATION_HOUR,
+                HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR
+        };
+
+        Cursor notificationsHourCursor = db.query(
+                HabitContract.HabitEntry.TABLE_NAME,
+                notificationsHoursColumns,
+                HabitContract.HabitEntry._ID + "=" + habitId,
+                null,
+                null,
+                null,
+                null
+        );
+
+        notificationsHourCursor.moveToFirst();
+
+        hoursAndMinutes[0].setText(notificationsHourCursor.getString(notificationsHourCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_MONDAY_NOTIFICATION_HOUR)));
+        hoursAndMinutes[1].setText(notificationsHourCursor.getString(notificationsHourCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_TUESDAY_NOTIFICATION_HOUR)));
+        hoursAndMinutes[2].setText(notificationsHourCursor.getString(notificationsHourCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_WEDNESDAY_NOTIFICATION_HOUR)));
+        hoursAndMinutes[3].setText(notificationsHourCursor.getString(notificationsHourCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_THURSDAY_NOTIFICATION_HOUR)));
+        hoursAndMinutes[4].setText(notificationsHourCursor.getString(notificationsHourCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_FRIDAY_NOTIFICATION_HOUR)));
+        hoursAndMinutes[5].setText(notificationsHourCursor.getString(notificationsHourCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_SATURDAY_NOTIFICATION_HOUR)));
+        hoursAndMinutes[6].setText(notificationsHourCursor.getString(notificationsHourCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR)));
+
+        notificationsHourCursor.close();
+    }
+
+    public void createNotification(View view) {
+        CheckBox checkBox;
+        switch (view.getId()){
+            case R.id.notification_monday_check_box:
+                checkBox = (CheckBox) findViewById(view.getId());
+                if(!updateDb(0, checkBox.isChecked(), hoursAndMinutes[0].getText().toString()))
+                    Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
+                if(checkBox.isChecked()) {
+                    startNotification(
+                            habitId * 1000,
+                            0,
+                            Integer.valueOf(hoursAndMinutes[0]
+                                    .getText()
+                                    .toString()
+                                    .substring(0, 2)),
+                            Integer.valueOf(hoursAndMinutes[0]
+                                    .getText()
+                                    .toString()
+                                    .substring(3, 5))
+                    );
+                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    stopNotification(habitId * 1000);
+                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.notification_tuesday_check_box:
+                checkBox = (CheckBox) findViewById(view.getId());
+                if(!updateDb(1, checkBox.isChecked(), hoursAndMinutes[1].getText().toString()))
+                    Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
+                if(checkBox.isChecked()) {
+                    startNotification(
+                            habitId * 1000 + 1,
+                            1,
+                            Integer.valueOf(hoursAndMinutes[1]
+                                    .getText()
+                                    .toString()
+                                    .substring(0, 2)),
+                            Integer.valueOf(hoursAndMinutes[1]
+                                    .getText()
+                                    .toString()
+                                    .substring(3, 5))
+                    );
+                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    stopNotification(habitId * 1000 + 1);
+                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.notification_wednesday_check_box:
+                checkBox = (CheckBox) findViewById(view.getId());
+                if(!updateDb(2, checkBox.isChecked(), hoursAndMinutes[2].getText().toString()))
+                    Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
+                if(checkBox.isChecked()) {
+                    startNotification(
+                            habitId * 1000 + 2,
+                            2,
+                            Integer.valueOf(hoursAndMinutes[2]
+                                    .getText()
+                                    .toString()
+                                    .substring(0, 2)),
+                            Integer.valueOf(hoursAndMinutes[2]
+                                    .getText()
+                                    .toString()
+                                    .substring(3, 5))
+                    );
+                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    stopNotification(habitId * 1000 + 2);
+                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.notification_thursday_check_box:
+                checkBox = (CheckBox) findViewById(view.getId());
+                if(!updateDb(3, checkBox.isChecked(), hoursAndMinutes[3].getText().toString()))
+                    Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
+                if(checkBox.isChecked()) {
+                    startNotification(
+                            habitId * 1000 + 3,
+                            3,
+                            Integer.valueOf(hoursAndMinutes[3]
+                                    .getText()
+                                    .toString()
+                                    .substring(0, 2)),
+                            Integer.valueOf(hoursAndMinutes[3]
+                                    .getText()
+                                    .toString()
+                                    .substring(3, 5))
+                    );
+                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    stopNotification(habitId * 1000 + 3);
+                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.notification_friday_check_box:
+                checkBox = (CheckBox) findViewById(view.getId());
+                if(!updateDb(4, checkBox.isChecked(), hoursAndMinutes[4].getText().toString()))
+                    Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
+                if(checkBox.isChecked()) {
+                    startNotification(
+                            habitId * 1000 + 4,
+                            4,
+                            Integer.valueOf(hoursAndMinutes[4]
+                                    .getText()
+                                    .toString()
+                                    .substring(0, 2)),
+                            Integer.valueOf(hoursAndMinutes[4]
+                                    .getText()
+                                    .toString()
+                                    .substring(3, 5))
+                    );
+                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    stopNotification(habitId * 1000 + 4);
+                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.notification_saturday_check_box:
+                checkBox = (CheckBox) findViewById(view.getId());
+                if(!updateDb(5, checkBox.isChecked(), hoursAndMinutes[5].getText().toString()))
+                    Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
+                if(checkBox.isChecked()) {
+                    startNotification(
+                            habitId * 1000 + 5,
+                            5,
+                            Integer.valueOf(hoursAndMinutes[5]
+                                    .getText()
+                                    .toString()
+                                    .substring(0, 2)),
+                            Integer.valueOf(hoursAndMinutes[5]
+                                    .getText()
+                                    .toString()
+                                    .substring(3, 5))
+                    );
+                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    stopNotification(habitId * 1000 + 5);
+                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.notification_sunday_check_box:
+                checkBox = (CheckBox) findViewById(view.getId());
+                if(!updateDb(6, checkBox.isChecked(), hoursAndMinutes[6].getText().toString()))
+                    Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
+                if(checkBox.isChecked()) {
+                    startNotification(
+                            habitId * 1000 + 6,
+                            6,
+                            Integer.valueOf(hoursAndMinutes[6]
+                                    .getText()
+                                    .toString()
+                                    .substring(0, 2)),
+                            Integer.valueOf(hoursAndMinutes[6]
+                                    .getText()
+                                    .toString()
+                                    .substring(3, 5))
+                    );
+                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    stopNotification(habitId * 1000 + 6);
+                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    public boolean updateDb(int day, boolean isChecked, String hour){
+        String columnsToUpdate[] = new String[2];
+        int valueShouldBeActive;
+        switch (day){
+            case 0:
+                columnsToUpdate[0] = HabitContract.HabitEntry.COLUMN_IS_MONDAY_NOTIFICATION_ACTIVE;
+                columnsToUpdate[1] = HabitContract.HabitEntry.COLUMN_MONDAY_NOTIFICATION_HOUR;
+                break;
+            case 1:
+                columnsToUpdate[0] = HabitContract.HabitEntry.COLUMN_IS_TUESDAY_NOTIFICATION_ACTIVE;
+                columnsToUpdate[1] = HabitContract.HabitEntry.COLUMN_TUESDAY_NOTIFICATION_HOUR;
+                break;
+            case 2:
+                columnsToUpdate[0] = HabitContract.HabitEntry.COLUMN_IS_WEDNESDAY_NOTIFICATION_ACTIVE;
+                columnsToUpdate[1] = HabitContract.HabitEntry.COLUMN_WEDNESDAY_NOTIFICATION_HOUR;
+                break;
+            case 3:
+                columnsToUpdate[0] = HabitContract.HabitEntry.COLUMN_IS_THURSDAY_NOTIFICATION_ACTIVE;
+                columnsToUpdate[1] = HabitContract.HabitEntry.COLUMN_THURSDAY_NOTIFICATION_HOUR;
+                break;
+            case 4:
+                columnsToUpdate[0] = HabitContract.HabitEntry.COLUMN_IS_FRIDAY_NOTIFICATION_ACTIVE;
+                columnsToUpdate[1] = HabitContract.HabitEntry.COLUMN_FRIDAY_NOTIFICATION_HOUR;
+                break;
+            case 5:
+                columnsToUpdate[0] = HabitContract.HabitEntry.COLUMN_IS_SATURDAY_NOTIFICATION_ACTIVE;
+                columnsToUpdate[1] = HabitContract.HabitEntry.COLUMN_SATURDAY_NOTIFICATION_HOUR;
+                break;
+            case 6:
+                columnsToUpdate[0] = HabitContract.HabitEntry.COLUMN_IS_SUNDAY_NOTIFICATION_ACTIVE;
+                columnsToUpdate[1] = HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR;
+                break;
+            default:
+                return false;
+        }
+
+        if(isChecked)
+            valueShouldBeActive = 1;
+        else
+            valueShouldBeActive = 0;
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(columnsToUpdate[0], valueShouldBeActive);
+        contentValues.put(columnsToUpdate[1], hour);
+
+        HabitDbHelper helper = new HabitDbHelper(this);
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        return db.update(HabitContract.HabitEntry.TABLE_NAME,
+                contentValues,
+                HabitContract.HabitEntry._ID + " = " + habitId,
+                null) > 0;
     }
 
     public void startNotification(int notificationId, int weekDay, int hour, int minute){
