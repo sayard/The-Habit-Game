@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class HabitDbHelper extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 8;
     public static final String DATABASE_NAME = "HabitDB.db";
 
     public HabitDbHelper(Context context){
@@ -26,6 +26,20 @@ public class HabitDbHelper extends SQLiteOpenHelper{
                 HabitContract.HabitEntry.COLUMN_DESCRIPTION + " TEXT, " +
                 HabitContract.HabitEntry.COLUMN_COLOR + " INTEGER NOT NULL, " +
                 HabitContract.HabitEntry.COLUMN_STREAK + " INTEGER NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_IS_MONDAY_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_IS_TUESDAY_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_IS_WEDNESDAY_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_IS_THURSDAY_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_IS_FRIDAY_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_IS_SATURDAY_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_IS_SUNDAY_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_MONDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
+                HabitContract.HabitEntry.COLUMN_TUESDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
+                HabitContract.HabitEntry.COLUMN_WEDNESDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
+                HabitContract.HabitEntry.COLUMN_THURSDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
+                HabitContract.HabitEntry.COLUMN_FRIDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
+                HabitContract.HabitEntry.COLUMN_SATURDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
+                HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
                 HabitContract.HabitEntry.COLUMN_DAYS_LEFT + " INTEGER DEFAULT 66);";
 
         db.execSQL(SQL_CREATE_HABITS);

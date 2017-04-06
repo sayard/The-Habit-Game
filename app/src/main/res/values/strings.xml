@@ -14,8 +14,17 @@
     <string name="EXTRA_DETAIL_STREAK" translatable="false">com.sayard.extra.DETAIL_STREAK</string>
     <string name="EXTRA_DETAIL_DAYS_LEFT" translatable="false">com.sayard.extra.DETAIL_DAYS_LEFT</string>
     <string name="EXTRA_UPDATE_ID" translatable="false">com.sayard.extra.UPDATE_ID</string>
+    <string name="EXTRA_NOTIFICATION_ID" translatable="false">com.sayard.extra.NOTIFICATION_ID</string>
     <string name="your_streak">Your streak</string>
     <string name="action_delete_habit">Delete habit</string>
     <string name="done_for_today">Done for today</string>
     <string name="update_habit">Update habit</string>
+    <string name="notifications">Notifications</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 </resources>
