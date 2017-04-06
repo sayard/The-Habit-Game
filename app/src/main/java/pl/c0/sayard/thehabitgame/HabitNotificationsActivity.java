@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
@@ -177,18 +180,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 if(!updateDb(0, checkBox.isChecked(), hoursAndMinutes[0].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
                 if(checkBox.isChecked()) {
-                    startNotification(
-                            habitId * 1000,
-                            0,
-                            Integer.valueOf(hoursAndMinutes[0]
-                                    .getText()
-                                    .toString()
-                                    .substring(0, 2)),
-                            Integer.valueOf(hoursAndMinutes[0]
-                                    .getText()
-                                    .toString()
-                                    .substring(3, 5))
-                    );
+                    startNotification(habitId * 1000, 0);
                     Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -201,18 +193,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 if(!updateDb(1, checkBox.isChecked(), hoursAndMinutes[1].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
                 if(checkBox.isChecked()) {
-                    startNotification(
-                            habitId * 1000 + 1,
-                            1,
-                            Integer.valueOf(hoursAndMinutes[1]
-                                    .getText()
-                                    .toString()
-                                    .substring(0, 2)),
-                            Integer.valueOf(hoursAndMinutes[1]
-                                    .getText()
-                                    .toString()
-                                    .substring(3, 5))
-                    );
+                    startNotification(habitId * 1000 + 1, 1);
                     Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -225,18 +206,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 if(!updateDb(2, checkBox.isChecked(), hoursAndMinutes[2].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
                 if(checkBox.isChecked()) {
-                    startNotification(
-                            habitId * 1000 + 2,
-                            2,
-                            Integer.valueOf(hoursAndMinutes[2]
-                                    .getText()
-                                    .toString()
-                                    .substring(0, 2)),
-                            Integer.valueOf(hoursAndMinutes[2]
-                                    .getText()
-                                    .toString()
-                                    .substring(3, 5))
-                    );
+                    startNotification(habitId * 1000 + 2, 2);
                     Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -249,18 +219,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 if(!updateDb(3, checkBox.isChecked(), hoursAndMinutes[3].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
                 if(checkBox.isChecked()) {
-                    startNotification(
-                            habitId * 1000 + 3,
-                            3,
-                            Integer.valueOf(hoursAndMinutes[3]
-                                    .getText()
-                                    .toString()
-                                    .substring(0, 2)),
-                            Integer.valueOf(hoursAndMinutes[3]
-                                    .getText()
-                                    .toString()
-                                    .substring(3, 5))
-                    );
+                    startNotification(habitId * 1000 + 3, 3);
                     Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -273,18 +232,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 if(!updateDb(4, checkBox.isChecked(), hoursAndMinutes[4].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
                 if(checkBox.isChecked()) {
-                    startNotification(
-                            habitId * 1000 + 4,
-                            4,
-                            Integer.valueOf(hoursAndMinutes[4]
-                                    .getText()
-                                    .toString()
-                                    .substring(0, 2)),
-                            Integer.valueOf(hoursAndMinutes[4]
-                                    .getText()
-                                    .toString()
-                                    .substring(3, 5))
-                    );
+                    startNotification(habitId * 1000 + 4, 4);
                     Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -297,18 +245,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 if(!updateDb(5, checkBox.isChecked(), hoursAndMinutes[5].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
                 if(checkBox.isChecked()) {
-                    startNotification(
-                            habitId * 1000 + 5,
-                            5,
-                            Integer.valueOf(hoursAndMinutes[5]
-                                    .getText()
-                                    .toString()
-                                    .substring(0, 2)),
-                            Integer.valueOf(hoursAndMinutes[5]
-                                    .getText()
-                                    .toString()
-                                    .substring(3, 5))
-                    );
+                    startNotification(habitId * 1000 + 5, 5);
                     Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -321,18 +258,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 if(!updateDb(6, checkBox.isChecked(), hoursAndMinutes[6].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
                 if(checkBox.isChecked()) {
-                    startNotification(
-                            habitId * 1000 + 6,
-                            6,
-                            Integer.valueOf(hoursAndMinutes[6]
-                                    .getText()
-                                    .toString()
-                                    .substring(0, 2)),
-                            Integer.valueOf(hoursAndMinutes[6]
-                                    .getText()
-                                    .toString()
-                                    .substring(3, 5))
-                    );
+                    startNotification(habitId * 1000 + 6, 6);
                     Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -397,11 +323,11 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 null) > 0;
     }
 
-    public void startNotification(int notificationId, int weekDay, int hour, int minute){
+    public void startNotification(int notificationId, int weekDay){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, weekDay+1);
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.DAY_OF_WEEK, weekDay+2);
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hoursAndMinutes[weekDay].getText().toString().substring(0,2)));
+        calendar.set(Calendar.MINUTE, Integer.valueOf(hoursAndMinutes[weekDay].getText().toString().substring(3,5)));
 
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
         intent.putExtra(getString(R.string.EXTRA_NOTIFICATION_ID), notificationId);
@@ -410,6 +336,14 @@ public class HabitNotificationsActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if(calendar.getTimeInMillis()<System.currentTimeMillis()){
+            System.out.println("time");//TODO calendar time is behind system FIX
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EE HH:mm");
+            String formatted = dateFormat.format(calendar.getTime());
+            System.out.println(formatted);
+            formatted = dateFormat.format(System.currentTimeMillis());
+            System.out.println(formatted);
+        }
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
     }
 
