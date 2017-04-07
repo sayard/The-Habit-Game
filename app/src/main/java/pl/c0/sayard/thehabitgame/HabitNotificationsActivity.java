@@ -336,14 +336,6 @@ public class HabitNotificationsActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        if(calendar.getTimeInMillis()<System.currentTimeMillis()){
-            System.out.println("time");//TODO calendar time is behind system FIX
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EE HH:mm");
-            String formatted = dateFormat.format(calendar.getTime());
-            System.out.println(formatted);
-            formatted = dateFormat.format(System.currentTimeMillis());
-            System.out.println(formatted);
-        }
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
     }
 
