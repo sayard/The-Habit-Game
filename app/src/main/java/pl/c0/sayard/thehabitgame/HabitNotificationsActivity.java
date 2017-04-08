@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,9 +14,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
@@ -326,11 +323,12 @@ public class HabitNotificationsActivity extends AppCompatActivity {
     public void startNotification(int notificationId, int weekDay){
         if(weekDay == 6)
             weekDay = -1;
-        weekDay += 2;
 
         Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(Calendar.DAY_OF_WEEK, weekDay);
+        calendar.set(Calendar.DAY_OF_WEEK, weekDay + 2);
+        if(weekDay == -1)
+            weekDay = 6;
         calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hoursAndMinutes[weekDay].getText().toString().substring(0,2)));
         calendar.set(Calendar.MINUTE, Integer.valueOf(hoursAndMinutes[weekDay].getText().toString().substring(3,5)));
 
