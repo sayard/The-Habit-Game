@@ -324,10 +324,19 @@ public class HabitNotificationsActivity extends AppCompatActivity {
     }
 
     public void startNotification(int notificationId, int weekDay){
+        if(weekDay == 6)
+            weekDay = -1;
+        weekDay += 2;
+
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, weekDay+2);
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.set(Calendar.DAY_OF_WEEK, weekDay);
         calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hoursAndMinutes[weekDay].getText().toString().substring(0,2)));
         calendar.set(Calendar.MINUTE, Integer.valueOf(hoursAndMinutes[weekDay].getText().toString().substring(3,5)));
+
+        if(calendar.getTimeInMillis()<System.currentTimeMillis()){
+            calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR) + 1);
+        }
 
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
         intent.putExtra(getString(R.string.EXTRA_NOTIFICATION_ID), notificationId);
