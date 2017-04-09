@@ -337,6 +337,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        intent.putExtra(getString(R.string.EXTRA_DETAIL_ID), habitId);
         intent.putExtra(getString(R.string.EXTRA_NOTIFICATION_ID), notificationId);
         intent.putExtra(getString(R.string.EXTRA_DETAIL_NAME), habitName);
 
