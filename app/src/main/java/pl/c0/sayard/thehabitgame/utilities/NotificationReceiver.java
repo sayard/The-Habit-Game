@@ -67,6 +67,8 @@ public class NotificationReceiver extends BroadcastReceiver{
                 .setContentText("It's time for " + title)
                 .setVibrate(new long[] { 250, 250, 250, 250, 250 })
                 .setSound(alarmSound)
+                .addAction(R.drawable.ic_done_black_24dp, "Done", pendingIntent)
+                .addAction(R.drawable.ic_not_today_black_24dp, "Not Today", pendingIntent)
                 .setAutoCancel(true);
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());
