@@ -64,14 +64,14 @@ public class AddNewHabitActivity extends AppCompatActivity {
 
         if(name.isEmpty()){
             nameEditText.setBackgroundColor(Color.RED);
-            Toast.makeText(this, "Name field must not be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.name_field_error, Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(addHabitToDb(name, desc, color) == -1){
-            Toast.makeText(this, "An error has occurred. Please try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_occurred, Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(this, "Habit added successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.habit_added, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

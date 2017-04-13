@@ -76,10 +76,10 @@ public class HabitDetailActivity extends AppCompatActivity {
         streakTextView.setText(String.valueOf(detailStreak));
         if(detailStreak<7){
             streakTextView.setTextColor(Color.parseColor("#E81B19"));
-            streakDescriptionTextView.setText("You need a little bit more work! Keep going!");
+            streakDescriptionTextView.setText(R.string.need_more_work);
         }else{
             streakTextView.setTextColor(Color.parseColor("#5DE84A"));
-            streakDescriptionTextView.setText("Great work! Keep it up!");
+            streakDescriptionTextView.setText(R.string.great_work);
         }
 
         TextView daysLeftTextView = (TextView) findViewById(R.id.habit_detail_days_left);
@@ -129,7 +129,7 @@ public class HabitDetailActivity extends AppCompatActivity {
                                 Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
                                 startActivity(intent);
                             }else{
-                                Toast.makeText(HabitDetailActivity.this, "Deleting has failed. Please try again.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HabitDetailActivity.this, R.string.deleting_failed, Toast.LENGTH_SHORT).show();
                             }
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -141,9 +141,9 @@ public class HabitDetailActivity extends AppCompatActivity {
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Are you sure you want to delete this habit?")
-                    .setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener)
+            builder.setMessage(R.string.do_you_want_to_delete)
+                    .setPositiveButton(R.string.yes, dialogClickListener)
+                    .setNegativeButton(R.string.no, dialogClickListener)
                     .show();
 
             return true;
@@ -182,26 +182,26 @@ public class HabitDetailActivity extends AppCompatActivity {
             isFirstTimeEditor.putBoolean("isFirstTime"+detailId, false);
             isFirstTimeEditor.commit();
             if(updateStreakAndDaysLeft()){
-                Toast.makeText(this, "Good job!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.good_job, Toast.LENGTH_SHORT).show();
                 dateCheckEditor.putString("dateCheck"+detailId, getCurrentDateString());
                 dateCheckEditor.commit();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }else{
-                Toast.makeText(this, "Updating has failed. Please try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.updating_failed, Toast.LENGTH_SHORT).show();
             }
         }else{
             if(dateCheckSharedPreferences.getString("dateCheck"+detailId, null).equals(getCurrentDateString())){
-                Toast.makeText(this, "You're done for today, come back tommorow.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.youre_done_for_today, Toast.LENGTH_LONG).show();
             }else{
                 if(updateStreakAndDaysLeft()){
-                    Toast.makeText(this, "Good job!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.good_job, Toast.LENGTH_SHORT).show();
                     dateCheckEditor.putString("dateCheck"+detailId, getCurrentDateString());
                     dateCheckEditor.commit();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(this, "Updating has failed. Please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.updating_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         }
