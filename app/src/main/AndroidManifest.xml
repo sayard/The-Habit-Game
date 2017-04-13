@@ -25,7 +25,7 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".HabitDetailActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".UpdateHabitActivity"
             android:launchMode="singleTop" />
@@ -42,6 +42,10 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".utilities.NotificationActionDoneReceiver"/>
+
+        <receiver android:name=".utilities.NotificationActionNotTodayReceiver"/>
     </application>
 
 </manifest>
