@@ -1,11 +1,16 @@
 package pl.c0.sayard.thehabitgame.data;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.c0.sayard.thehabitgame.R;
+import pl.c0.sayard.thehabitgame.TheHabitGame;
 
 /**
  * Created by Karol on 06.03.2017.
@@ -13,7 +18,7 @@ import java.util.List;
 
 public class SampleData {
 
-    public static void insertSampleData(SQLiteDatabase db){
+    public void insertSampleData(SQLiteDatabase db){
         if(db == null)
             return;
 
@@ -41,8 +46,16 @@ public class SampleData {
         }catch (SQLiteException e){
             e.printStackTrace();
         }finally {
+            commitToSharedPreferences(TheHabitGame.getContext());
             db.endTransaction();
         }
+    }
 
+    private void commitToSharedPreferences(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.preference_button_first_click), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isFirstTime1", true);
+        editor.putBoolean("isFirstTime2", true);
+        editor.commit();
     }
 }

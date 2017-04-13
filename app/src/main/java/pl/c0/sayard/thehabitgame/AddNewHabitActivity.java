@@ -1,7 +1,10 @@
 package pl.c0.sayard.thehabitgame;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -83,6 +86,34 @@ public class AddNewHabitActivity extends AppCompatActivity {
         values.put(HabitContract.HabitEntry.COLUMN_DESCRIPTION, desc);
         values.put(HabitContract.HabitEntry.COLUMN_COLOR, color);
 
+        commitToSharedPreferences();
+
         return db.insert(HabitContract.HabitEntry.TABLE_NAME, null, values);
+    }
+
+    private void commitToSharedPreferences(){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(this.getString(R.string.preference_button_first_click), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(getFirstTimeClickSharedPreferenceKey(), true);
+        editor.commit();
+    }
+
+    private String getFirstTimeClickSharedPreferenceKey(){
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(HabitContract.HabitEntry.TABLE_NAME,
+                new String[]{HabitContract.HabitEntry._ID},
+                null,
+                null,
+                null,
+                null,
+                HabitContract.HabitEntry._ID + " DESC",
+                "1");
+
+        cursor.moveToFirst();
+        int id = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry._ID));
+        cursor.close();
+        String key = "isFirstTime" + id;
+        return key;
     }
 }
