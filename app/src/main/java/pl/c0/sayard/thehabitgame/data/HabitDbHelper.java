@@ -43,7 +43,8 @@ public class HabitDbHelper extends SQLiteOpenHelper{
                 HabitContract.HabitEntry.COLUMN_DAYS_LEFT + " INTEGER DEFAULT 66);";
 
         db.execSQL(SQL_CREATE_HABITS);
-        SampleData.insertSampleData(db);
+        SampleData sd = new SampleData();
+        sd.insertSampleData(db);
     }
 
     @Override

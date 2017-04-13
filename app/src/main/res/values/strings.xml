@@ -7,14 +7,16 @@
     <string name="habit_color">Habit color</string>
     <string name="apply">Apply</string>
     <string name="description">Description</string>
-    <string name="EXTRA_DETAIL_ID" translatable="false">com.sayard.extra.DETAIL_ID</string>
-    <string name="EXTRA_DETAIL_NAME" translatable="false">com.sayard.extra.DETAIL_NAME</string>
-    <string name="EXTRA_DETAIL_COLOR" translatable="false">com.sayard.extra.DETAIL_COLOR</string>
-    <string name="EXTRA_DETAIL_DESCRIPTION" translatable="false">com.sayard.extra.DETAIL_DESCRIPTION</string>
-    <string name="EXTRA_DETAIL_STREAK" translatable="false">com.sayard.extra.DETAIL_STREAK</string>
-    <string name="EXTRA_DETAIL_DAYS_LEFT" translatable="false">com.sayard.extra.DETAIL_DAYS_LEFT</string>
-    <string name="EXTRA_UPDATE_ID" translatable="false">com.sayard.extra.UPDATE_ID</string>
-    <string name="EXTRA_NOTIFICATION_ID" translatable="false">com.sayard.extra.NOTIFICATION_ID</string>
+    <string name="EXTRA_DETAIL_ID" translatable="false">pl.c0.sayard.thehabitgame.extra.DETAIL_ID</string>
+    <string name="EXTRA_DETAIL_NAME" translatable="false">pl.c0.sayard.thehabitgame.DETAIL_NAME</string>
+    <string name="EXTRA_DETAIL_COLOR" translatable="false">pl.c0.sayard.thehabitgame.DETAIL_COLOR</string>
+    <string name="EXTRA_DETAIL_DESCRIPTION" translatable="false">pl.c0.sayard.thehabitgame.DETAIL_DESCRIPTION</string>
+    <string name="EXTRA_DETAIL_STREAK" translatable="false">pl.c0.sayard.thehabitgame.DETAIL_STREAK</string>
+    <string name="EXTRA_DETAIL_DAYS_LEFT" translatable="false">pl.c0.sayard.thehabitgame.extra.DETAIL_DAYS_LEFT</string>
+    <string name="EXTRA_UPDATE_ID" translatable="false">pl.c0.sayard.thehabitgame.extra.UPDATE_ID</string>
+    <string name="EXTRA_NOTIFICATION_ID" translatable="false">pl.c0.sayard.thehabitgame.extra.NOTIFICATION_ID</string>
+    <string name="preference_button_first_click" translatable="false">pl.c0.sayard.thehabitgame.PREFERENCE_BUTTON_FIRST_CLICK</string>
+    <string name="preference_day_check_key" translatable="false">pl.c0.sayard.thehabitgame.PREFERENCE_DAY_CHECK_KEY</string>
     <string name="your_streak">Your streak</string>
     <string name="action_delete_habit">Delete habit</string>
     <string name="done_for_today">Done for today</string>

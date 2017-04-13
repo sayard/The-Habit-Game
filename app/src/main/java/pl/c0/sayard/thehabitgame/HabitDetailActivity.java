@@ -2,8 +2,10 @@ package pl.c0.sayard.thehabitgame;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -15,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
@@ -169,12 +174,36 @@ public class HabitDetailActivity extends AppCompatActivity {
     }
 
     public void habitPerformed(View view){
-        if(updateStreakAndDaysLeft()){
-            Toast.makeText(this, "Good job!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+        SharedPreferences isFirstTimeSharedPreferences = this.getSharedPreferences(getString(R.string.preference_button_first_click), Context.MODE_PRIVATE);
+        SharedPreferences dateCheckSharedPreferences = this.getSharedPreferences(this.getString(R.string.preference_day_check_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor dateCheckEditor = dateCheckSharedPreferences.edit();
+        if(isFirstTimeSharedPreferences.getBoolean("isFirstTime"+detailId, true)){
+            SharedPreferences.Editor isFirstTimeEditor = isFirstTimeSharedPreferences.edit();
+            isFirstTimeEditor.putBoolean("isFirstTime"+detailId, false);
+            isFirstTimeEditor.commit();
+            if(updateStreakAndDaysLeft()){
+                Toast.makeText(this, "Good job!", Toast.LENGTH_SHORT).show();
+                dateCheckEditor.putString("dateCheck"+detailId, getCurrentDateString());
+                dateCheckEditor.commit();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "Updating has failed. Please try again.", Toast.LENGTH_SHORT).show();
+            }
         }else{
-            Toast.makeText(this, "Updating has failed. Please try again.", Toast.LENGTH_SHORT).show();
+            if(dateCheckSharedPreferences.getString("dateCheck"+detailId, null).equals(getCurrentDateString())){
+                Toast.makeText(this, "You're done for today, come back tommorow.", Toast.LENGTH_LONG).show();
+            }else{
+                if(updateStreakAndDaysLeft()){
+                    Toast.makeText(this, "Good job!", Toast.LENGTH_SHORT).show();
+                    dateCheckEditor.putString("dateCheck"+detailId, getCurrentDateString());
+                    dateCheckEditor.commit();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(this, "Updating has failed. Please try again.", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 
@@ -210,6 +239,13 @@ public class HabitDetailActivity extends AppCompatActivity {
                 values,
                 HabitContract.HabitEntry._ID + " = " + detailId,
                 null) > 0;
+    }
+
+    private String getCurrentDateString(){
+        Calendar currTimeCalendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(currTimeCalendar.getTime());
+        return formattedDate;
     }
 
     public static Activity getInstance(){
