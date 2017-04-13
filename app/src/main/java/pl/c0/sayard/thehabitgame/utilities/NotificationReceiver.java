@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import pl.c0.sayard.thehabitgame.HabitDetailActivity;
-import pl.c0.sayard.thehabitgame.MainActivity;
 import pl.c0.sayard.thehabitgame.R;
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
@@ -33,9 +32,9 @@ public class NotificationReceiver extends BroadcastReceiver{
             title = intent.getStringExtra(context.getString(R.string.EXTRA_DETAIL_NAME));
         }
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final int HABIT_ID = intent.getIntExtra(context.getString(R.string.EXTRA_DETAIL_ID), -1);
 
-        Cursor cursor = getHabitData(context, intent.getIntExtra(context.getString(R.string.EXTRA_DETAIL_ID), -1));
+        Cursor cursor = getHabitData(context, HABIT_ID);
 
         cursor.moveToFirst();
 
@@ -60,6 +59,11 @@ public class NotificationReceiver extends BroadcastReceiver{
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
+        Intent doneActionIntent = new Intent(context, NotificationActionDoneReceiver.class);
+        doneActionIntent.putExtra(context.getString(R.string.EXTRA_DETAIL_ID), HABIT_ID);
+        doneActionIntent.putExtra(context.getString(R.string.EXTRA_NOTIFICATION_ID), NOTIFICATION_ID);
+        PendingIntent doneActionPendingIntent = PendingIntent.getBroadcast(context, -1, doneActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(android.R.drawable.arrow_up_float)
@@ -67,9 +71,11 @@ public class NotificationReceiver extends BroadcastReceiver{
                 .setContentText("It's time for " + title)
                 .setVibrate(new long[] { 250, 250, 250, 250, 250 })
                 .setSound(alarmSound)
-                .addAction(R.drawable.ic_done_black_24dp, "Done", pendingIntent)
+                .addAction(R.drawable.ic_done_black_24dp, "Done", doneActionPendingIntent)
                 .addAction(R.drawable.ic_not_today_black_24dp, "Not Today", pendingIntent)
                 .setAutoCancel(true);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
@@ -87,15 +93,13 @@ public class NotificationReceiver extends BroadcastReceiver{
             HabitContract.HabitEntry.COLUMN_DAYS_LEFT
         };
 
-        Cursor cursor = db.query(HabitContract.HabitEntry.TABLE_NAME,
+        return db.query(HabitContract.HabitEntry.TABLE_NAME,
                 columns,
                 HabitContract.HabitEntry._ID + " = " + habitId,
                 null,
                 null,
                 null,
                 null);
-
-        return cursor;
     }
 
 }

@@ -1,5 +1,6 @@
 package pl.c0.sayard.thehabitgame;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,18 +23,24 @@ public class HabitDetailActivity extends AppCompatActivity {
 
     private int detailId;
     private String detailName;
+    static HabitDetailActivity detailActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_detail);
 
+        detailActivity = this;
+
         Intent intent = getIntent();
         detailId = intent.getIntExtra(getString(R.string.EXTRA_DETAIL_ID), -1);
-        detailName = intent.getStringExtra(getString(R.string.EXTRA_DETAIL_NAME));
-        int detailColor = intent.getIntExtra(getString(R.string.EXTRA_DETAIL_COLOR), 0);
-        String detailDesc = intent.getStringExtra(getString(R.string.EXTRA_DETAIL_DESCRIPTION));
-        int detailStreak = intent.getIntExtra(getString(R.string.EXTRA_DETAIL_STREAK), 0);
-        String detailDaysLeft = intent.getStringExtra(getString(R.string.EXTRA_DETAIL_DAYS_LEFT));
+
+        Cursor cursor = getHabitDetails(detailId);
+        cursor.moveToFirst();
+        detailName = cursor.getString(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_NAME));
+        String detailDesc = cursor.getString(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DESCRIPTION));
+        int detailColor = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_COLOR));
+        int detailStreak = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_STREAK));
+        int detailDaysLeft = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DAYS_LEFT));
 
         TextView nameTextView = (TextView) findViewById(R.id.habit_detail_name);
         nameTextView.setText(detailName);
@@ -71,8 +78,28 @@ public class HabitDetailActivity extends AppCompatActivity {
         }
 
         TextView daysLeftTextView = (TextView) findViewById(R.id.habit_detail_days_left);
-        daysLeftTextView.setText(detailDaysLeft);
+        daysLeftTextView.setText(String.valueOf(detailDaysLeft));
+    }
 
+    private Cursor getHabitDetails(int habitId){
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] columns = {
+                HabitContract.HabitEntry.COLUMN_NAME,
+                HabitContract.HabitEntry.COLUMN_COLOR,
+                HabitContract.HabitEntry.COLUMN_DESCRIPTION,
+                HabitContract.HabitEntry.COLUMN_STREAK,
+                HabitContract.HabitEntry.COLUMN_DAYS_LEFT
+        };
+
+        return db.query(HabitContract.HabitEntry.TABLE_NAME,
+                columns,
+                HabitContract.HabitEntry._ID + " = " + habitId,
+                null,
+                null,
+                null,
+                null);
     }
 
     @Override
@@ -183,5 +210,9 @@ public class HabitDetailActivity extends AppCompatActivity {
                 values,
                 HabitContract.HabitEntry._ID + " = " + detailId,
                 null) > 0;
+    }
+
+    public static Activity getInstance(){
+        return detailActivity;
     }
 }

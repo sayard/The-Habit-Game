@@ -56,10 +56,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
         final int _ID = mCursor.getInt(mCursor.getColumnIndex(HabitContract.HabitEntry._ID));
         final String NAME = mCursor.getString(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_NAME));
-        final int COLOR = mCursor.getInt(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_COLOR));
-        final String DESCRIPTION = mCursor.getString(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DESCRIPTION));
-        final int STREAK = mCursor.getInt(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_STREAK));
-        final String DAYS_LEFT = mCursor.getString(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DAYS_LEFT));
 
         int color = mCursor.getInt(mCursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_COLOR));
 
@@ -70,11 +66,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, HabitDetailActivity.class);
                 intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_ID), _ID);
-                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_NAME), NAME);
-                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_COLOR), COLOR);
-                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_DESCRIPTION),DESCRIPTION);
-                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_STREAK), STREAK);
-                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_DAYS_LEFT), DAYS_LEFT);
                 mContext.startActivity(intent);
             }
         });
