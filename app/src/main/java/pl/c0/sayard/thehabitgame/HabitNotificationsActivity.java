@@ -27,6 +27,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
     private TextView[] hoursAndMinutes = new TextView[7];
     private int habitId;
     private String habitName;
+    private static HabitNotificationsActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
 
         setCheckBoxesStatus();
         setHoursAndMinutes();
+        instance = this;
     }
 
     public void assignWeekDaysAndHoursAndMinutes(){
@@ -176,97 +178,69 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 checkBox = (CheckBox) findViewById(view.getId());
                 if(!updateDb(0, checkBox.isChecked(), hoursAndMinutes[0].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
-                if(checkBox.isChecked()) {
-                    startNotification(habitId * 1000, 0);
-                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if(checkBox.isChecked())
+                    startNotification(habitId * 1000, 0, false);
+                else
                     stopNotification(habitId * 1000);
-                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case R.id.notification_tuesday_check_box:
                 checkBox = (CheckBox) findViewById(view.getId());
                 if(!updateDb(1, checkBox.isChecked(), hoursAndMinutes[1].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
-                if(checkBox.isChecked()) {
-                    startNotification(habitId * 1000 + 1, 1);
-                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if(checkBox.isChecked())
+                    startNotification(habitId * 1000 + 1, 1, false);
+                else
                     stopNotification(habitId * 1000 + 1);
-                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case R.id.notification_wednesday_check_box:
                 checkBox = (CheckBox) findViewById(view.getId());
                 if(!updateDb(2, checkBox.isChecked(), hoursAndMinutes[2].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
-                if(checkBox.isChecked()) {
-                    startNotification(habitId * 1000 + 2, 2);
-                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if(checkBox.isChecked())
+                    startNotification(habitId * 1000 + 2, 2, false);
+                else
                     stopNotification(habitId * 1000 + 2);
-                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case R.id.notification_thursday_check_box:
                 checkBox = (CheckBox) findViewById(view.getId());
                 if(!updateDb(3, checkBox.isChecked(), hoursAndMinutes[3].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
-                if(checkBox.isChecked()) {
-                    startNotification(habitId * 1000 + 3, 3);
-                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if(checkBox.isChecked())
+                    startNotification(habitId * 1000 + 3, 3, false);
+                else
                     stopNotification(habitId * 1000 + 3);
-                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case R.id.notification_friday_check_box:
                 checkBox = (CheckBox) findViewById(view.getId());
                 if(!updateDb(4, checkBox.isChecked(), hoursAndMinutes[4].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
-                if(checkBox.isChecked()) {
-                    startNotification(habitId * 1000 + 4, 4);
-                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if(checkBox.isChecked())
+                    startNotification(habitId * 1000 + 4, 4, false);
+                else
                     stopNotification(habitId * 1000 + 4);
-                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case R.id.notification_saturday_check_box:
                 checkBox = (CheckBox) findViewById(view.getId());
                 if(!updateDb(5, checkBox.isChecked(), hoursAndMinutes[5].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
-                if(checkBox.isChecked()) {
-                    startNotification(habitId * 1000 + 5, 5);
-                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if(checkBox.isChecked())
+                    startNotification(habitId * 1000 + 5, 5, false);
+                else
                     stopNotification(habitId * 1000 + 5);
-                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case R.id.notification_sunday_check_box:
                 checkBox = (CheckBox) findViewById(view.getId());
                 if(!updateDb(6, checkBox.isChecked(), hoursAndMinutes[6].getText().toString()))
                     Toast.makeText(this, "Failed to create notification", Toast.LENGTH_SHORT).show();
-                if(checkBox.isChecked()) {
-                    startNotification(habitId * 1000 + 6, 6);
-                    Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if(checkBox.isChecked())
+                    startNotification(habitId * 1000 + 6, 6, false);
+                else
                     stopNotification(habitId * 1000 + 6);
-                    Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
-                }
                 break;
         }
     }
 
-    public boolean updateDb(int day, boolean isChecked, String hour){
+    private boolean updateDb(int day, boolean isChecked, String hour){
         String columnsToUpdate[] = new String[2];
         int valueShouldBeActive;
         switch (day){
@@ -320,7 +294,7 @@ public class HabitNotificationsActivity extends AppCompatActivity {
                 null) > 0;
     }
 
-    public void startNotification(int notificationId, int weekDay){
+    public void startNotification(int notificationId, int weekDay, boolean isUpdated){
         if(weekDay == 6)
             weekDay = -1;
 
@@ -345,15 +319,21 @@ public class HabitNotificationsActivity extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
+
+        if(isUpdated)
+            Toast.makeText(this, "Updated notification", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, "Created notification", Toast.LENGTH_SHORT).show();
     }
 
-    public void stopNotification(int notificationId){
+    private void stopNotification(int notificationId){
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
         intent.putExtra(getString(R.string.EXTRA_NOTIFICATION_ID), notificationId);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), notificationId, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
+        Toast.makeText(this, "Deleted notification", Toast.LENGTH_SHORT).show();
     }
 
     public void setTime(View view) {
@@ -363,28 +343,32 @@ public class HabitNotificationsActivity extends AppCompatActivity {
 
         switch (viewId){
             case R.id.notification_monday_tv:
-                timePickerFragment.show(getFragmentManager(), "Monday");
+                timePickerFragment.show(getFragmentManager(), "Monday" + (habitId*1000));
                 break;
             case R.id.notification_tuesday_tv:
-                timePickerFragment.show(getFragmentManager(), "Tuesday");
+                timePickerFragment.show(getFragmentManager(), "Tuesday" + (habitId*1000 + 1));
                 break;
             case R.id.notification_wednesday_tv:
-                timePickerFragment.show(getFragmentManager(), "Wednesday");
+                timePickerFragment.show(getFragmentManager(), "Wednesday" + (habitId*1000 + 2));
                 break;
             case R.id.notification_thursday_tv:
-                timePickerFragment.show(getFragmentManager(), "Thursday");
+                timePickerFragment.show(getFragmentManager(), "Thursday" + (habitId*1000 + 3));
                 break;
             case R.id.notification_friday_tv:
-                timePickerFragment.show(getFragmentManager(), "Friday");
+                timePickerFragment.show(getFragmentManager(), "Friday" + (habitId*1000 + 4));
                 break;
             case R.id.notification_saturday_tv:
-                timePickerFragment.show(getFragmentManager(), "Saturday");
+                timePickerFragment.show(getFragmentManager(), "Saturday" + (habitId*1000 + 5));
                 break;
             case R.id.notification_sunday_tv:
-                timePickerFragment.show(getFragmentManager(), "Sunday");
+                timePickerFragment.show(getFragmentManager(), "Sunday" + (habitId*1000 + 6));
                 break;
             default:
                 break;
         }
+    }
+
+    public static HabitNotificationsActivity getInstance(){
+        return instance;
     }
 }
