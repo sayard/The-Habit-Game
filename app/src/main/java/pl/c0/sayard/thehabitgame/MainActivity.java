@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
 import pl.c0.sayard.thehabitgame.data.SampleData;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new HabitAdapter(this, cursor);
         mRecyclerView.setAdapter(mAdapter);
+
+        startTutorial();
     }
 
     private Cursor getAllHabits(){
@@ -85,5 +89,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startTutorial(){
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(250);
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, getString(R.string.showcase_sequence_1_id));
+        sequence.setConfig(config);
+
+        sequence.addSequenceItem(new View(this),
+                getString(R.string.showcase_sequence_1_1),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(new View(this),
+                getString(R.string.showcase_sequence_1_2),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(findViewById(R.id.habit_recycler_view),
+                getString(R.string.showcase_sequence_1_3),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(findViewById(R.id.fab),
+                getString(R.string.showcase_sequence_1_4),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(findViewById(R.id.habit_recycler_view),
+                getString(R.string.showcase_sequence_1_5),
+                getString(R.string.got_it));
+
+        sequence.start();
     }
 }

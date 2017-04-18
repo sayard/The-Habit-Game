@@ -8,7 +8,7 @@
     android:padding="16dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/habit_detail_name"
         android:textSize="32sp"
@@ -19,7 +19,7 @@
         android:textColor="@android:color/black"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/description"
         android:paddingTop="8dp"
@@ -27,15 +27,16 @@
         android:textColor="@android:color/black"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/habit_detail_desc"
         android:paddingTop="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="16sp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/your_streak"
         android:paddingTop="8dp"
@@ -43,33 +44,36 @@
         android:textColor="@android:color/black"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/habit_detail_streak"
         android:paddingTop="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="16sp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/habit_detail_streak_desc"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="16sp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Days left"
+        android:text="@string/days_left"
         android:paddingTop="8dp"
         android:textSize="24sp"
         android:textColor="@android:color/black"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/habit_detail_days_left"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="16sp"/>
 
     <RelativeLayout
@@ -84,7 +88,8 @@
             android:textColor="@android:color/white"
             android:text="@string/done_for_today"
             android:onClick="habitPerformed"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:id="@+id/doneForTodayButton"/>
     </RelativeLayout>
 
 

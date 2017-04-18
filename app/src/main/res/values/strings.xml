@@ -41,4 +41,21 @@
     <string name="name_field_error">Name field must not be empty</string>
     <string name="error_occurred">An error has occurred. Please try again.</string>
     <string name="habit_added">Habit added successfully</string>
+    <string name="days_left">Days left</string>
+    <string name="next">NEXT</string>
+    <string name="got_it">GOT IT</string>
+    <string name="showcase_sequence_1_id" translatable="false">pl.c0.sayard.thehabitgame.SHOWCASE_SEQUENCE_1</string>
+    <string name="showcase_sequence_1_1">Hi! Thanks for installing the app!</string>
+    <string name="showcase_sequence_1_2">This automated tour will guide you through the key features!</string>
+    <string name="showcase_sequence_1_3">Here you have the list of all habits.</string>
+    <string name="showcase_sequence_1_4">You can add new ones here.</string>
+    <string name="showcase_sequence_1_5">You can also view the details by clicking on the name of the habit. Go ahead and try it now.</string>
+    <string name="showcase_sequence_2_id" translatable="false">pl.c0.sayard.thehabitgame.SHOWCASE_SEQUENCE_2</string>
+    <string name="showcase_sequence_2_1">On this screen you can view details and track progress of developing your habit.</string>
+    <string name="showcase_sequence_2_2">You can see details such as name of the habit and description here.</string>
+    <string name="showcase_sequence_2_3">It takes approximately 66 days to develop a new habit.</string>
+    <string name="showcase_sequence_2_4">You can track your progress so far here...</string>
+    <string name="showcase_sequence_2_5">...and here.</string>
+    <string name="showcase_sequence_2_6">You can also set up reminders and edit the habit from the menu.</string>
+    <string name="showcase_sequence_2_7">If you\'re done with your habit for a day. You can mark it by clicking this button.</string>
 </resources>
