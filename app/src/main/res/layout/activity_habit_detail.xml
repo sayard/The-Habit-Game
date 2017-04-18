@@ -32,6 +32,7 @@
         android:id="@+id/habit_detail_desc"
         android:paddingTop="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="16sp"/>
 
     <TextView
@@ -48,6 +49,7 @@
         android:id="@+id/habit_detail_streak"
         android:paddingTop="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="16sp"/>
 
     <TextView
@@ -55,12 +57,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/habit_detail_streak_desc"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="16sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Days left"
+        android:text="@string/days_left"
         android:paddingTop="8dp"
         android:textSize="24sp"
         android:textColor="@android:color/black"/>
@@ -70,6 +73,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/habit_detail_days_left"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="16sp"/>
 
     <RelativeLayout

@@ -23,6 +23,8 @@ import java.util.Calendar;
 
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class HabitDetailActivity extends AppCompatActivity {
 
@@ -84,6 +86,8 @@ public class HabitDetailActivity extends AppCompatActivity {
 
         TextView daysLeftTextView = (TextView) findViewById(R.id.habit_detail_days_left);
         daysLeftTextView.setText(String.valueOf(detailDaysLeft));
+
+        startTutorial();
     }
 
     private Cursor getHabitDetails(int habitId){
@@ -250,5 +254,43 @@ public class HabitDetailActivity extends AppCompatActivity {
 
     public static Activity getInstance(){
         return detailActivity;
+    }
+
+    private void startTutorial() {
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(250);
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, getString(R.string.showcase_sequence_2_id));
+        sequence.setConfig(config);
+
+        sequence.addSequenceItem(new View(this),
+                getString(R.string.showcase_sequence_2_1),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(findViewById(R.id.habit_detail_name),
+                getString(R.string.showcase_sequence_2_2),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(new View(this),
+                getString(R.string.showcase_sequence_2_3),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(findViewById(R.id.habit_detail_streak),
+                getString(R.string.showcase_sequence_2_4),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(findViewById(R.id.habit_detail_days_left),
+                getString(R.string.showcase_sequence_2_5),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(new View(this),
+                getString(R.string.showcase_sequence_2_6),
+                getString(R.string.next));
+
+        sequence.addSequenceItem(findViewById(R.id.doneForTodayButton),
+                getString(R.string.showcase_sequence_2_7),
+                getString(R.string.got_it));
+
+        sequence.start();
     }
 }
