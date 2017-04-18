@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 null,
                 null,
-                null);
+                HabitContract.HabitEntry.COLUMN_COLOR);
     }
 
     @Override

@@ -49,6 +49,8 @@ public class HabitDetailActivity extends AppCompatActivity {
         int detailStreak = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_STREAK));
         int detailDaysLeft = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DAYS_LEFT));
 
+        cursor.close();
+
         TextView nameTextView = (TextView) findViewById(R.id.habit_detail_name);
         nameTextView.setText(detailName);
         switch (detailColor)
@@ -70,7 +72,15 @@ public class HabitDetailActivity extends AppCompatActivity {
         }
 
         TextView descriptionTextView = (TextView) findViewById(R.id.habit_detail_desc);
-        descriptionTextView.setText(detailDesc);
+        if(!detailDesc.equals("")){
+            descriptionTextView.setText(detailDesc);
+        }else{
+            TextView descriptionHeaderTextView = (TextView) findViewById(R.id.habit_detail_desc_header);
+            descriptionHeaderTextView.setVisibility(View.INVISIBLE);
+            descriptionHeaderTextView.setHeight(0);
+            descriptionTextView.setVisibility(View.INVISIBLE);
+            descriptionTextView.setHeight(0);
+        }
 
         TextView streakTextView = (TextView) findViewById(R.id.habit_detail_streak);
         TextView streakDescriptionTextView = (TextView) findViewById(R.id.habit_detail_streak_desc);
@@ -177,7 +187,7 @@ public class HabitDetailActivity extends AppCompatActivity {
                 null) > 0;
     }
 
-    public void habitPerformed(View view){
+    public void performHabit(View view){
         SharedPreferences isFirstTimeSharedPreferences = this.getSharedPreferences(getString(R.string.preference_button_first_click), Context.MODE_PRIVATE);
         SharedPreferences dateCheckSharedPreferences = this.getSharedPreferences(this.getString(R.string.preference_day_check_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor dateCheckEditor = dateCheckSharedPreferences.edit();

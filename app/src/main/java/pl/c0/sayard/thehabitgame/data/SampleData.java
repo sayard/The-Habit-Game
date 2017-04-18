@@ -32,6 +32,7 @@ public class SampleData {
 
         contentValues = new ContentValues();
         contentValues.put(HabitContract.HabitEntry.COLUMN_NAME, "Hit the gym");
+        contentValues.put(HabitContract.HabitEntry.COLUMN_DESCRIPTION, "Go to the gym every day");
         contentValues.put(HabitContract.HabitEntry.COLUMN_COLOR,2);
         habitList.add(contentValues);
 

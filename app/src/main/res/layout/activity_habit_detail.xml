@@ -24,7 +24,8 @@
         android:text="@string/description"
         android:paddingTop="8dp"
         android:textSize="24sp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:id="@+id/habit_detail_desc_header"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,7 +88,7 @@
             android:background="?attr/colorPrimary"
             android:textColor="@android:color/white"
             android:text="@string/done_for_today"
-            android:onClick="habitPerformed"
+            android:onClick="performHabit"
             android:layout_alignParentBottom="true"
             android:id="@+id/doneForTodayButton"/>
     </RelativeLayout>
