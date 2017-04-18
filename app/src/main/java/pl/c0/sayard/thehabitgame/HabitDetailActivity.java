@@ -177,7 +177,7 @@ public class HabitDetailActivity extends AppCompatActivity {
                 null) > 0;
     }
 
-    public void habitPerformed(View view){
+    public void performHabit(View view){
         SharedPreferences isFirstTimeSharedPreferences = this.getSharedPreferences(getString(R.string.preference_button_first_click), Context.MODE_PRIVATE);
         SharedPreferences dateCheckSharedPreferences = this.getSharedPreferences(this.getString(R.string.preference_day_check_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor dateCheckEditor = dateCheckSharedPreferences.edit();

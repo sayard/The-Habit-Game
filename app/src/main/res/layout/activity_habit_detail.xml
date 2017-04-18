@@ -87,7 +87,7 @@
             android:background="?attr/colorPrimary"
             android:textColor="@android:color/white"
             android:text="@string/done_for_today"
-            android:onClick="habitPerformed"
+            android:onClick="performHabit"
             android:layout_alignParentBottom="true"
             android:id="@+id/doneForTodayButton"/>
     </RelativeLayout>
