@@ -31,4 +31,13 @@ public final class HabitContract {
         public static final String COLUMN_SATURDAY_NOTIFICATION_HOUR = "saturday_notification_hour";
         public static final String COLUMN_SUNDAY_NOTIFICATION_HOUR = "sunday_notification_hour";
     }
+
+    public static class AchievementEntry implements BaseColumns{
+        public static final String TABLE_NAME = "achievements";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_DESCRIPTION = "description";
+        public static final String COLUMN_IS_COMPLETED = "is_completed";
+        public static final String IMAGE_COMPLETED = "image_completed";
+        public static final String IMAGE_NOT_COMPLETED = "image_not_completed";
+    }
 }

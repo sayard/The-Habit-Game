@@ -50,6 +50,44 @@ public class SampleData {
             commitToSharedPreferences(TheHabitGame.getContext());
             db.endTransaction();
         }
+
+        List<ContentValues> achievementList = new ArrayList<>();
+
+        contentValues = new ContentValues();
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Achievement 1");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Description 1");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "sample_achievement_image");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "sample_achievement_image");
+        achievementList.add(contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Achievement 2");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Description 2");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "sample_achievement_image");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "sample_achievement_image");
+        achievementList.add(contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Achievement 3");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Description 3");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "sample_achievement_image");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "sample_achievement_image");
+        achievementList.add(contentValues);
+
+        try{
+            db.beginTransaction();
+            db.delete(HabitContract.AchievementEntry.TABLE_NAME, null, null);
+
+            for(ContentValues contentValue : achievementList){
+                db.insert(HabitContract.AchievementEntry.TABLE_NAME, null, contentValue);
+            }
+            db.setTransactionSuccessful();
+        }catch (SQLiteException e){
+            e.printStackTrace();
+        }finally {
+            commitToSharedPreferences(TheHabitGame.getContext());
+            db.endTransaction();
+        }
     }
 
     private void commitToSharedPreferences(Context context){
