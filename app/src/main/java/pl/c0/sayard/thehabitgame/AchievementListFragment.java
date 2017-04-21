@@ -19,7 +19,7 @@ import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
 
 public class AchievementListFragment extends Fragment {
 
-    public static Fragment newInstance(int position) {
+    public static Fragment newInstance() {
         AchievementListFragment achievementListFragment = new AchievementListFragment();
         return achievementListFragment;
     }

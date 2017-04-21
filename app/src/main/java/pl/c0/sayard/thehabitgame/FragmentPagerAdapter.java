@@ -19,9 +19,9 @@ public class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAd
     @Override
     public Fragment getItem(int position) {
         if(position == 0)
-            return HabitListFragment.newInstance(position + 1);
+            return HabitListFragment.newInstance();
         else
-            return AchievementListFragment.newInstance(position + 1);
+            return AchievementListFragment.newInstance();
     }
 
     @Override
