@@ -1,6 +1,5 @@
 package pl.c0.sayard.thehabitgame;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -12,11 +11,9 @@ public class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAd
 
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "Habits", "Achievements" };
-    private Context context;
 
-    public FragmentPagerAdapter(FragmentManager fragmentManager, Context context){
+    public FragmentPagerAdapter(FragmentManager fragmentManager){
         super(fragmentManager);
-        this.context = context;
     }
 
     @Override

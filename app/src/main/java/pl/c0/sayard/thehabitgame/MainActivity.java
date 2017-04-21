@@ -38,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
         FragmentPagerAdapter fragmentPagerAdapter = new pl.c0.sayard.thehabitgame.FragmentPagerAdapter(
-                getSupportFragmentManager(),
-                this
+                getSupportFragmentManager()
         );
         viewPager.setAdapter(fragmentPagerAdapter);
 
