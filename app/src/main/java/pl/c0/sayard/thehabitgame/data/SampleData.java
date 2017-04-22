@@ -54,29 +54,29 @@ public class SampleData {
         List<ContentValues> achievementList = new ArrayList<>();
 
         contentValues = new ContentValues();
-        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Achievement 1");
-        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Description 1");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "My First Week");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Strike a one week streak");
         contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "achievement_week_streak_completed");
         contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "achievement_week_streak_not_completed");
         achievementList.add(contentValues);
 
         contentValues = new ContentValues();
-        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Achievement 2");
-        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Description 2");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Thirty Days Has September...");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Strike a one month streak");
         contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "achievement_month_streak_completed");
         contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "achievement_month_streak_not_completed");
         achievementList.add(contentValues);
 
         contentValues = new ContentValues();
-        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Achievement 3");
-        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Description 3");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "...April, June and November");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Strike a two month streak");
         contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "achievement_two_month_streak_completed");
         contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "achievement_two_month_streak_not_completed");
         achievementList.add(contentValues);
 
         contentValues = new ContentValues();
-        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Achievement 4");
-        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Description 4");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Finally got it!");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Develop a habit");
         contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "achievement_habit_developed_completed");
         contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "achievement_habit_developed_not_completed");
         achievementList.add(contentValues);
