@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import pl.c0.sayard.thehabitgame.data.AchievementManager;
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
@@ -205,7 +206,7 @@ public class HabitDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.updating_failed, Toast.LENGTH_SHORT).show();
             }
         }else{
-            if(dateCheckSharedPreferences.getString("dateCheck"+detailId, null).equals(getCurrentDateString())){
+            if(false){//TODO dateCheckSharedPreferences.getString("dateCheck"+detailId, null).equals(getCurrentDateString())
                 Toast.makeText(this, R.string.youre_done_for_today, Toast.LENGTH_LONG).show();
             }else{
                 if(updateStreakAndDaysLeft()){
@@ -233,7 +234,7 @@ public class HabitDetailActivity extends AppCompatActivity {
 
         Cursor cursor = db.query(HabitContract.HabitEntry.TABLE_NAME,
                 columnsToUpdate,
-                HabitContract.HabitEntry._ID + " = " +detailId,
+                HabitContract.HabitEntry._ID + " = " + detailId,
                 null,
                 null,
                 null,
@@ -244,6 +245,19 @@ public class HabitDetailActivity extends AppCompatActivity {
         int currentDaysLeft = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DAYS_LEFT));
         currentStreak++;
         currentDaysLeft--;
+        cursor.close();
+
+        if(currentStreak==7){
+            AchievementManager.setAchievementCompleted(this, 1);
+        }else if(currentStreak==30){
+            AchievementManager.setAchievementCompleted(this, 2);
+        }else if(currentStreak==60){
+            AchievementManager.setAchievementCompleted(this, 3);
+        }
+
+        if(currentDaysLeft == 0){
+            
+        }
 
         ContentValues values = new ContentValues();
         values.put(HabitContract.HabitEntry.COLUMN_STREAK, currentStreak);
