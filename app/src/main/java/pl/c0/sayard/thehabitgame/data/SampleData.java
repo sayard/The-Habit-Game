@@ -50,6 +50,51 @@ public class SampleData {
             commitToSharedPreferences(TheHabitGame.getContext());
             db.endTransaction();
         }
+
+        List<ContentValues> achievementList = new ArrayList<>();
+
+        contentValues = new ContentValues();
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "My First Week");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Strike a one week streak");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "achievement_week_streak_completed");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "achievement_week_streak_not_completed");
+        achievementList.add(contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Thirty Days Has September...");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Strike a one month streak");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "achievement_month_streak_completed");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "achievement_month_streak_not_completed");
+        achievementList.add(contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "...April, June and November");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Strike a two month streak");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "achievement_two_month_streak_completed");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "achievement_two_month_streak_not_completed");
+        achievementList.add(contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_NAME, "Finally got it!");
+        contentValues.put(HabitContract.AchievementEntry.COLUMN_DESCRIPTION, "Develop a habit");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_COMPLETED, "achievement_habit_developed_completed");
+        contentValues.put(HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED, "achievement_habit_developed_not_completed");
+        achievementList.add(contentValues);
+
+        try{
+            db.beginTransaction();
+            db.delete(HabitContract.AchievementEntry.TABLE_NAME, null, null);
+
+            for(ContentValues contentValue : achievementList){
+                db.insert(HabitContract.AchievementEntry.TABLE_NAME, null, contentValue);
+            }
+            db.setTransactionSuccessful();
+        }catch (SQLiteException e){
+            e.printStackTrace();
+        }finally {
+            commitToSharedPreferences(TheHabitGame.getContext());
+            db.endTransaction();
+        }
     }
 
     private void commitToSharedPreferences(Context context){

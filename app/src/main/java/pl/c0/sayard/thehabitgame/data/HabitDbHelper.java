@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class HabitDbHelper extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 9;
     public static final String DATABASE_NAME = "HabitDB.db";
 
     public HabitDbHelper(Context context){
@@ -42,7 +42,17 @@ public class HabitDbHelper extends SQLiteOpenHelper{
                 HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
                 HabitContract.HabitEntry.COLUMN_DAYS_LEFT + " INTEGER DEFAULT 66);";
 
+        final String SQL_CREATE_ACHIEVEMENTS = "CREATE TABLE " +
+                HabitContract.AchievementEntry.TABLE_NAME + " (" +
+                HabitContract.AchievementEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                HabitContract.AchievementEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                HabitContract.AchievementEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
+                HabitContract.AchievementEntry.COLUMN_IS_COMPLETED + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.AchievementEntry.IMAGE_COMPLETED + " TEXT NOT NULL, " +
+                HabitContract.AchievementEntry.IMAGE_NOT_COMPLETED + " TEXT NOT NULL);";
+
         db.execSQL(SQL_CREATE_HABITS);
+        db.execSQL(SQL_CREATE_ACHIEVEMENTS);
         SampleData sd = new SampleData();
         sd.insertSampleData(db);
     }
@@ -52,7 +62,11 @@ public class HabitDbHelper extends SQLiteOpenHelper{
         final String SQL_DELETE_HABITS =
                 "DROP TABLE IF EXISTS " + HabitContract.HabitEntry.TABLE_NAME;
 
+        final String SQL_DELETE_ACHIEVEMENTS =
+                "DROP TABLE IF EXISTS " + HabitContract.AchievementEntry.TABLE_NAME;
+
         db.execSQL(SQL_DELETE_HABITS);
+        db.execSQL(SQL_DELETE_ACHIEVEMENTS);
         onCreate(db);
     }
     @Override

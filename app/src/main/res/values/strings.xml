@@ -58,4 +58,10 @@
     <string name="showcase_sequence_2_5">...and here.</string>
     <string name="showcase_sequence_2_6">You can also set up reminders and edit the habit from the menu.</string>
     <string name="showcase_sequence_2_7">If you\'re done with your habit for a day. You can mark it by clicking this button.</string>
+    <string name="habit_developed_dialog_text">You can now stop developing the habit or you can have one more week.</string>
+    <string name="im_done">I\'m done</string>
+    <string name="give_me_one_more_week">Give me one more week</string>
+    <string name="EXTRA_DETAIL_CURR_DAYS_LEFT" translatable="false">pl.c0.sayard.thehabitgame.extra.CURR_DAYS_LEFT</string>
+    <string name="EXTRA_DETAIL_SHOULD_SHOW_DELETING_DIALOG" translatable="false">pl.c0.sayard.thehabitgame.extra.SHOULD_SHOW_DELETING_DIALOG</string>
+    <string name="got_achievement">You got an achievement!</string>
 </resources>
