@@ -41,6 +41,7 @@ public class HabitDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         detailId = intent.getIntExtra(getString(R.string.EXTRA_DETAIL_ID), -1);
+        boolean shouldCreateDeletingDialog = intent.getBooleanExtra(getString(R.string.EXTRA_DETAIL_SHOULD_SHOW_DELETING_DIALOG), false);
 
         Cursor cursor = getHabitDetails(detailId);
         cursor.moveToFirst();
@@ -97,6 +98,12 @@ public class HabitDetailActivity extends AppCompatActivity {
 
         TextView daysLeftTextView = (TextView) findViewById(R.id.habit_detail_days_left);
         daysLeftTextView.setText(String.valueOf(detailDaysLeft));
+
+        if(shouldCreateDeletingDialog)
+            showDeletingDialog(getString(R.string.habit_developed_dialog_text),
+                    getString(R.string.im_done),
+                    getString(R.string.give_me_one_more_week),
+                    false);
 
         startTutorial();
     }
