@@ -27,7 +27,6 @@ public class SampleData {
         ContentValues contentValues = new ContentValues();
         contentValues.put(HabitContract.HabitEntry.COLUMN_NAME, "Reading");
         contentValues.put(HabitContract.HabitEntry.COLUMN_DESCRIPTION, "Read every 2 days");
-        contentValues.put(HabitContract.HabitEntry.COLUMN_DAYS_LEFT, 2);//TODO remove
         contentValues.put(HabitContract.HabitEntry.COLUMN_COLOR, 1);
         habitList.add(contentValues);
 

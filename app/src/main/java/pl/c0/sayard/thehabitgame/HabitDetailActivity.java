@@ -133,34 +133,10 @@ public class HabitDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_delete_habit){
-
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which)
-                    {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            if(deleteHabitFromDatabase()){
-                                Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            }else{
-                                Toast.makeText(HabitDetailActivity.this, R.string.deleting_failed, Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            return;
-                        default:
-                            return;
-                    }
-                }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.do_you_want_to_delete)
-                    .setPositiveButton(R.string.yes, dialogClickListener)
-                    .setNegativeButton(R.string.no, dialogClickListener)
-                    .show();
-
+            showDeletingDialog(getString(R.string.do_you_want_to_delete),
+                    getString(R.string.yes),
+                    getString(R.string.no),
+                    true);
             return true;
         }else if(id == R.id.action_update_habit){
             Intent intent = new Intent(this, UpdateHabitActivity.class);
@@ -176,14 +152,88 @@ public class HabitDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void showDeletingDialog(String dialogMessage, String dialogPositiveButton, String dialogNegativeButton, boolean actionDelete){
+        DialogInterface.OnClickListener actionDeleteDialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which)
+                {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        if(deleteHabitFromDatabase()){
+                            Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(HabitDetailActivity.this, R.string.deleting_failed, Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        return;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        DialogInterface.OnClickListener actionHabitDevelopedClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
+                switch (which)
+                {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        deleteHabitFromDatabase();
+                        AchievementManager.setAchievementCompleted(HabitDetailActivity.this, 4);
+                        Toast.makeText(HabitDetailActivity.this, "Congratulations!", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        addOneOneMoreWeek();
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        DialogInterface.OnClickListener onClickListener;
+        if(actionDelete)
+            onClickListener = actionDeleteDialogClickListener;
+        else
+            onClickListener = actionHabitDevelopedClickListener;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(dialogMessage)
+                .setCancelable(false)
+                .setPositiveButton(dialogPositiveButton, onClickListener)
+                .setNegativeButton(dialogNegativeButton, onClickListener)
+                .show();
+    }
+
     private boolean deleteHabitFromDatabase() {
         if(detailId == -1)
             return false;
 
-        HabitDbHelper helper = new HabitDbHelper(this);
-        SQLiteDatabase db = helper.getReadableDatabase();
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         return db.delete(HabitContract.HabitEntry.TABLE_NAME,
+                HabitContract.HabitEntry._ID + " = " + detailId,
+                null) > 0;
+    }
+
+    private boolean addOneOneMoreWeek(){
+        if(detailId == -1)
+            return false;
+
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(HabitContract.HabitEntry.COLUMN_DAYS_LEFT, 7);
+
+        return db.update(HabitContract.HabitEntry.TABLE_NAME,
+                contentValues,
                 HabitContract.HabitEntry._ID + " = " + detailId,
                 null) > 0;
     }
@@ -192,45 +242,15 @@ public class HabitDetailActivity extends AppCompatActivity {
         SharedPreferences isFirstTimeSharedPreferences = this.getSharedPreferences(getString(R.string.preference_button_first_click), Context.MODE_PRIVATE);
         SharedPreferences dateCheckSharedPreferences = this.getSharedPreferences(this.getString(R.string.preference_day_check_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor dateCheckEditor = dateCheckSharedPreferences.edit();
-        if(isFirstTimeSharedPreferences.getBoolean("isFirstTime"+detailId, true)){
-            SharedPreferences.Editor isFirstTimeEditor = isFirstTimeSharedPreferences.edit();
-            isFirstTimeEditor.putBoolean("isFirstTime"+detailId, false);
-            isFirstTimeEditor.commit();
-            if(updateStreakAndDaysLeft()){
-                Toast.makeText(this, R.string.good_job, Toast.LENGTH_SHORT).show();
-                dateCheckEditor.putString("dateCheck"+detailId, getCurrentDateString());
-                dateCheckEditor.commit();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }else{
-                Toast.makeText(this, R.string.updating_failed, Toast.LENGTH_SHORT).show();
-            }
-        }else{
-            if(false){//TODO dateCheckSharedPreferences.getString("dateCheck"+detailId, null).equals(getCurrentDateString())
-                Toast.makeText(this, R.string.youre_done_for_today, Toast.LENGTH_LONG).show();
-            }else{
-                if(updateStreakAndDaysLeft()){
-                    Toast.makeText(this, R.string.good_job, Toast.LENGTH_SHORT).show();
-                    dateCheckEditor.putString("dateCheck"+detailId, getCurrentDateString());
-                    dateCheckEditor.commit();
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(this, R.string.updating_failed, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
 
-    public boolean updateStreakAndDaysLeft() {
         if(detailId == -1)
-            return false;
+            return;
 
         HabitDbHelper helper = new HabitDbHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
 
         String columnsToUpdate[] = {HabitContract.HabitEntry.COLUMN_STREAK,
-                    HabitContract.HabitEntry.COLUMN_DAYS_LEFT};
+                HabitContract.HabitEntry.COLUMN_DAYS_LEFT};
 
         Cursor cursor = db.query(HabitContract.HabitEntry.TABLE_NAME,
                 columnsToUpdate,
@@ -243,9 +263,50 @@ public class HabitDetailActivity extends AppCompatActivity {
         cursor.moveToFirst();
         int currentStreak = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_STREAK));
         int currentDaysLeft = cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_DAYS_LEFT));
+        cursor.close();
+
+        if(isFirstTimeSharedPreferences.getBoolean("isFirstTime"+detailId, true)){
+            SharedPreferences.Editor isFirstTimeEditor = isFirstTimeSharedPreferences.edit();
+            isFirstTimeEditor.putBoolean("isFirstTime"+detailId, false);
+            isFirstTimeEditor.commit();
+            if(updateStreakAndDaysLeft(currentStreak, currentDaysLeft)){
+                Toast.makeText(this, R.string.good_job, Toast.LENGTH_SHORT).show();
+                dateCheckEditor.putString("dateCheck"+detailId, getCurrentDateString());
+                dateCheckEditor.commit();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, R.string.updating_failed, Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            if(dateCheckSharedPreferences.getString("dateCheck"+detailId, null).equals(getCurrentDateString())){
+                Toast.makeText(this, R.string.youre_done_for_today, Toast.LENGTH_LONG).show();
+            }else{
+
+                if(currentDaysLeft <= 1){
+                    showDeletingDialog(getString(R.string.habit_developed_dialog_text),
+                            getString(R.string.im_done),
+                            getString(R.string.give_me_one_more_week),
+                            false);
+                    return;
+                }
+
+                if(updateStreakAndDaysLeft(currentStreak, currentDaysLeft)){
+                    Toast.makeText(this, R.string.good_job, Toast.LENGTH_SHORT).show();
+                    dateCheckEditor.putString("dateCheck"+detailId, getCurrentDateString());
+                    dateCheckEditor.commit();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(this, R.string.updating_failed, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    public boolean updateStreakAndDaysLeft(int currentStreak, int currentDaysLeft) {
         currentStreak++;
         currentDaysLeft--;
-        cursor.close();
 
         if(currentStreak==7){
             AchievementManager.setAchievementCompleted(this, 1);
@@ -255,9 +316,8 @@ public class HabitDetailActivity extends AppCompatActivity {
             AchievementManager.setAchievementCompleted(this, 3);
         }
 
-        if(currentDaysLeft == 0){
-            
-        }
+        HabitDbHelper helper = new HabitDbHelper(this);
+        SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(HabitContract.HabitEntry.COLUMN_STREAK, currentStreak);
