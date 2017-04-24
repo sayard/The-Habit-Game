@@ -63,4 +63,5 @@
     <string name="give_me_one_more_week">Give me one more week</string>
     <string name="EXTRA_DETAIL_CURR_DAYS_LEFT" translatable="false">pl.c0.sayard.thehabitgame.extra.CURR_DAYS_LEFT</string>
     <string name="EXTRA_DETAIL_SHOULD_SHOW_DELETING_DIALOG" translatable="false">pl.c0.sayard.thehabitgame.extra.SHOULD_SHOW_DELETING_DIALOG</string>
+    <string name="got_achievement">You got an achievement!</string>
 </resources>

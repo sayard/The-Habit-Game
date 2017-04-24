@@ -53,7 +53,6 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         if(!cursor.moveToPosition(position))
             return;
 
-        final int _ID = cursor.getInt(cursor.getColumnIndex(HabitContract.AchievementEntry._ID));
         final String NAME = cursor.getString(cursor.getColumnIndex(HabitContract.AchievementEntry.COLUMN_NAME));
         final String DESCRIPTION = cursor.getString(cursor.getColumnIndex(HabitContract.AchievementEntry.COLUMN_DESCRIPTION));
         final int IS_COMPLETED = cursor.getInt(cursor.getColumnIndex(HabitContract.AchievementEntry.COLUMN_IS_COMPLETED));
