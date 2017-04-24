@@ -64,4 +64,9 @@
     <string name="EXTRA_DETAIL_CURR_DAYS_LEFT" translatable="false">pl.c0.sayard.thehabitgame.extra.CURR_DAYS_LEFT</string>
     <string name="EXTRA_DETAIL_SHOULD_SHOW_DELETING_DIALOG" translatable="false">pl.c0.sayard.thehabitgame.extra.SHOULD_SHOW_DELETING_DIALOG</string>
     <string name="got_achievement">You got an achievement!</string>
+    <string name="EXTRA_DELETING_DIALOG_MESSAGE" translatable="false">pl.c0.sayard.thehabitgame.extra.DELETING_DIALOG_MESSAGE</string>
+    <string name="EXTRA_DELETING_DIALOG_POSITIVE_BUTTON" translatable="false">pl.c0.sayard.thehabitgame.extra.DELETING_DIALOG_POSITIVE_BUTTON</string>
+    <string name="EXTRA_DELETING_DIALOG_NEGATIVE_BUTTON" translatable="false">pl.c0.sayard.thehabitgame.extra.DELETING_DIALOG_NEGATIVE_BUTTON</string>
+    <string name="EXTRA_DELETING_DIALOG_ACTION_DELETE" translatable="false">pl.c0.sayard.thehabitgame.extra.DELETING_DIALOG_ACTION_DELETE</string>
+    <string name="EXTRA_DELETING_DIALOG_HABIT_ID" translatable="false">pl.c0.sayard.thehabitgame.extra.DELETING_DIALOG_HABIT_ID</string>
 </resources>
