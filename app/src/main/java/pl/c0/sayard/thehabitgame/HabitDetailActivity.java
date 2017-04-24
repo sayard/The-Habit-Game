@@ -1,6 +1,7 @@
 package pl.c0.sayard.thehabitgame;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,6 +25,7 @@ import java.util.Calendar;
 import pl.c0.sayard.thehabitgame.data.AchievementManager;
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
+import pl.c0.sayard.thehabitgame.utilities.DeletingDialogFragment;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
@@ -160,89 +162,15 @@ public class HabitDetailActivity extends AppCompatActivity {
     }
 
     private void showDeletingDialog(String dialogMessage, String dialogPositiveButton, String dialogNegativeButton, boolean actionDelete){
-        DialogInterface.OnClickListener actionDeleteDialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which)
-                {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        if(deleteHabitFromDatabase()){
-                            Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }else{
-                            Toast.makeText(HabitDetailActivity.this, R.string.deleting_failed, Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        return;
-                    default:
-                        break;
-                }
-            }
-        };
-
-        DialogInterface.OnClickListener actionHabitDevelopedClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
-                switch (which)
-                {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        deleteHabitFromDatabase();
-                        AchievementManager.setAchievementCompleted(HabitDetailActivity.this, 4);
-                        Toast.makeText(HabitDetailActivity.this, "Congratulations!", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        addOneOneMoreWeek();
-                        startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-
-        DialogInterface.OnClickListener onClickListener;
-        if(actionDelete)
-            onClickListener = actionDeleteDialogClickListener;
-        else
-            onClickListener = actionHabitDevelopedClickListener;
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(dialogMessage)
-                .setCancelable(false)
-                .setPositiveButton(dialogPositiveButton, onClickListener)
-                .setNegativeButton(dialogNegativeButton, onClickListener)
-                .show();
-    }
-
-    private boolean deleteHabitFromDatabase() {
-        if(detailId == -1)
-            return false;
-
-        HabitDbHelper dbHelper = new HabitDbHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        return db.delete(HabitContract.HabitEntry.TABLE_NAME,
-                HabitContract.HabitEntry._ID + " = " + detailId,
-                null) > 0;
-    }
-
-    private boolean addOneOneMoreWeek(){
-        if(detailId == -1)
-            return false;
-
-        HabitDbHelper dbHelper = new HabitDbHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(HabitContract.HabitEntry.COLUMN_DAYS_LEFT, 7);
-
-        return db.update(HabitContract.HabitEntry.TABLE_NAME,
-                contentValues,
-                HabitContract.HabitEntry._ID + " = " + detailId,
-                null) > 0;
+        DialogFragment deletingDialogFragment = new DeletingDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(getString(R.string.EXTRA_DELETING_DIALOG_MESSAGE), dialogMessage);
+        args.putString(getString(R.string.EXTRA_DELETING_DIALOG_POSITIVE_BUTTON), dialogPositiveButton);
+        args.putString(getString(R.string.EXTRA_DELETING_DIALOG_NEGATIVE_BUTTON), dialogNegativeButton);
+        args.putBoolean(getString(R.string.EXTRA_DELETING_DIALOG_ACTION_DELETE), actionDelete);
+        args.putInt(getString(R.string.EXTRA_DELETING_DIALOG_HABIT_ID), detailId);
+        deletingDialogFragment.setArguments(args);
+        deletingDialogFragment.show(getFragmentManager(), "deleting_dialog");
     }
 
     public void performHabit(View view){

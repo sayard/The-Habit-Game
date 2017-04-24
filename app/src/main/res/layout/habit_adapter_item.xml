@@ -14,23 +14,24 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
         android:background="@color/colorPrimary"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
         android:text=""
-        android:layout_marginLeft="8dp"/>
+        android:textColor="@android:color/white"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/name_text_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_weight="1"
         android:fontFamily="sans-serif"
         android:textSize="16sp"
-        android:text=""/>
-
+        android:text=""
+        android:gravity="center|left"
+        android:background="@drawable/click_animation"/>
 
 </LinearLayout>

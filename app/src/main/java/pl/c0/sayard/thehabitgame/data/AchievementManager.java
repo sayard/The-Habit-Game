@@ -15,7 +15,7 @@ import pl.c0.sayard.thehabitgame.R;
  * Created by Karol on 22.04.2017.
  */
 
-public class AchievementManager {//TODO notification/toast
+public class AchievementManager {
     public static void setAchievementCompleted(Context context, int achievementNumber){
         HabitDbHelper dbHelper = new HabitDbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();

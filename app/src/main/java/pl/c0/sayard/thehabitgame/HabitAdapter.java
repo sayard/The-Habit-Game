@@ -70,6 +70,15 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             }
         });
 
+        holder.colorTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, HabitDetailActivity.class);
+                intent.putExtra(mContext.getString(R.string.EXTRA_DETAIL_ID), _ID);
+                mContext.startActivity(intent);
+            }
+        });
+
         switch (color)
         {
             case 1:
