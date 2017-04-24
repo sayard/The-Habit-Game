@@ -20,7 +20,7 @@
         android:gravity="center"
         android:text=""
         android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/name_text_view"
@@ -31,6 +31,7 @@
         android:fontFamily="sans-serif"
         android:textSize="16sp"
         android:text=""
-        android:gravity="center|left"/>
+        android:gravity="center|left"
+        android:background="@drawable/click_animation"/>
 
 </LinearLayout>
