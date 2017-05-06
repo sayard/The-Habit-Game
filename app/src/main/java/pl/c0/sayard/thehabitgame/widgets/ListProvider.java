@@ -1,16 +1,20 @@
 package pl.c0.sayard.thehabitgame.widgets;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import pl.c0.sayard.thehabitgame.HabitDetailActivity;
 import pl.c0.sayard.thehabitgame.R;
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
@@ -67,7 +71,9 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
         HabitDbHelper dbHelper = new HabitDbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String columns[] = {HabitContract.HabitEntry.COLUMN_NAME,
+        String columns[] = {
+                HabitContract.HabitEntry._ID,
+                HabitContract.HabitEntry.COLUMN_NAME,
                 HabitContract.HabitEntry.COLUMN_STREAK};
 
         Cursor cursor = db.query(HabitContract.HabitEntry.TABLE_NAME,
@@ -78,14 +84,20 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
                 null,
                 null);
         cursor.moveToFirst();
-        do{
-            HabitListItem listItem = new HabitListItem();
-            listItem.setHeading(cursor.getString(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_NAME)));
-            listItem.setContent("Current streak:" +
-                cursor.getString(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_STREAK)));
-            listItemList.add(listItem);
-        }while (cursor.moveToNext());
-        cursor.close();
+        try {
+            do{
+                HabitListItem listItem = new HabitListItem();
+                listItem.setId(cursor.getInt(cursor.getColumnIndex(HabitContract.HabitEntry._ID)));
+                listItem.setHeading(cursor.getString(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_NAME)));
+                listItem.setContent("Current streak:" +
+                        cursor.getString(cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_STREAK)));
+                listItemList.add(listItem);
+            }while (cursor.moveToNext());
+        }catch (CursorIndexOutOfBoundsException e){
+            cursor.close();
+        }finally {
+            cursor.close();
+        }
     }
 
     @Override
@@ -116,6 +128,12 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
         HabitListItem listItem = listItemList.get(position);
         remoteViews.setTextViewText(R.id.habit_list_row_heading, listItem.getHeading());
         remoteViews.setTextViewText(R.id.habit_list_row_content, listItem.getContent());
+
+        Bundle extras = new Bundle();
+        extras.putInt(context.getString(R.string.EXTRA_DETAIL_ID), listItemList.get(position).getId());
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtras(extras);
+        remoteViews.setOnClickFillInIntent(R.id.habit_list_row_linear_layout, fillInIntent);
 
         return remoteViews;
     }

@@ -1,5 +1,6 @@
 package pl.c0.sayard.thehabitgame.widgets;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
+import pl.c0.sayard.thehabitgame.HabitDetailActivity;
 import pl.c0.sayard.thehabitgame.R;
 
 /**
@@ -21,6 +23,9 @@ public class WidgetProvider extends AppWidgetProvider {
         for(int i=0; i<widgetCount; i++){
             RemoteViews remoteViews = updateWidgetListView(context,
                     appWidgetIds[i]);
+
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.widget_list);
+
             appWidgetManager.updateAppWidget(appWidgetIds[i],
                     remoteViews);
         }
@@ -37,6 +42,15 @@ public class WidgetProvider extends AppWidgetProvider {
             serviceIntent.toUri(Intent.URI_INTENT_SCHEME)));
         remoteViews.setRemoteAdapter(R.id.widget_list, serviceIntent);
         remoteViews.setEmptyView(R.id.widget_list, R.id.empty_view);
+
+        Intent clickIntent = new Intent(context, HabitDetailActivity.class);
+        PendingIntent clickPendingIntent = PendingIntent.getActivity(context,
+                0,
+                clickIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        remoteViews.setPendingIntentTemplate(R.id.widget_list, clickPendingIntent);
+
         return remoteViews;
     }
 }

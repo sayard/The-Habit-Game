@@ -6,8 +6,17 @@ package pl.c0.sayard.thehabitgame.widgets;
 
 public class HabitListItem {
 
+    private int id;
     private String heading;
     private String content;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setHeading(String heading) {
         this.heading = heading;
