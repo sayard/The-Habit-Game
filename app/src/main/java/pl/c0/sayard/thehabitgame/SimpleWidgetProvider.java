@@ -1,13 +1,11 @@
 package pl.c0.sayard.thehabitgame;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.RemoteViews;
-
-import java.util.Random;
 
 /**
  * Created by Karol on 04.05.2017.
@@ -17,21 +15,26 @@ public class SimpleWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        final int count = appWidgetIds.length;
-
-        for(int i=0; i<count; i++){
-            int widgetId = appWidgetIds[i];
-            String number = String.format("%03d", (new Random().nextInt(900)+100));
-
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.simple_widget);
-            remoteViews.setTextViewText(R.id.textView, number);
-
-            Intent intent = new Intent(context, SimpleWidgetProvider.class);
-            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            remoteViews.setOnClickPendingIntent(R.id.actionButton, pendingIntent);
-            appWidgetManager.updateAppWidget(widgetId, remoteViews);
+        final int widetCount = appWidgetIds.length;
+        for(int i=0; i<widetCount; i++){//TODO ++i
+            RemoteViews remoteViews = updateWidgetListView(context,
+                    appWidgetIds[i]);
+            appWidgetManager.updateAppWidget(appWidgetIds[i],
+                    remoteViews);
         }
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
+
+    private RemoteViews updateWidgetListView(Context context, int appWidgetId){
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
+                R.layout.simple_widget);
+
+        Intent serviceIntent = new Intent(context, WidgetService.class);
+        serviceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        serviceIntent.setData(Uri.parse(
+            serviceIntent.toUri(Intent.URI_INTENT_SCHEME)));
+        remoteViews.setRemoteAdapter(appWidgetId, R.id.widget_list, serviceIntent);
+        remoteViews.setEmptyView(R.id.widget_list, R.id.empty_view);
+        return remoteViews;
     }
 }
