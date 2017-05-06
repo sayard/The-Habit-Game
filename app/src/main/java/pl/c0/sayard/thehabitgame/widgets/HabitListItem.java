@@ -1,4 +1,4 @@
-package pl.c0.sayard.thehabitgame;
+package pl.c0.sayard.thehabitgame.widgets;
 
 /**
  * Created by Karol on 06.05.2017.
