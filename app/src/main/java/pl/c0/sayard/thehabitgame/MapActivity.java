@@ -112,9 +112,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(HabitContract.HabitEntry.COLUMN_IS_GEO_NOTIFICATION_ACTIVE, notificationActive);
-        if(!latitude.isNaN())
+        if(latitude != null)
             contentValues.put(HabitContract.HabitEntry.COLUMN_GEO_NOTIFICATION_LATITUDE, latitude);
-        if(!longitude.isNaN())
+        if(longitude != null)
             contentValues.put(HabitContract.HabitEntry.COLUMN_GEON_NOTIFICATION_LONGITUDE, longitude);
 
         db.update(HabitContract.HabitEntry.TABLE_NAME,
