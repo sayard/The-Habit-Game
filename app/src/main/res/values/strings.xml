@@ -71,4 +71,6 @@
     <string name="EXTRA_DELETING_DIALOG_HABIT_ID" translatable="false">pl.c0.sayard.thehabitgame.extra.DELETING_DIALOG_HABIT_ID</string>
     <string name="today_s_list">Today\'s list</string>
     <string name="you_re_done_for_today">You\'re done for today</string>
+    <string name="set_notification">Set Notification</string>
+    <string name="cancel_notification">Cancel Notification</string>
 </resources>
