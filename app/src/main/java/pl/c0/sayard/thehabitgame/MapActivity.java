@@ -84,7 +84,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     if(!isLocationServiceRunning(LocationService.class)){
                         Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
                         startService(serviceIntent);
-                        System.out.println("service started");
                     }
 
                     Toast.makeText(MapActivity.this, "Notification set", Toast.LENGTH_SHORT).show();
@@ -104,7 +103,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     if(shouldStopService()){
                         Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
                         stopService(serviceIntent);
-                        System.out.println("service stopped");
                     }
                     finish();
                 }else{
