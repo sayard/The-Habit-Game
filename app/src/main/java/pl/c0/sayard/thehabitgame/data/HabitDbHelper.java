@@ -42,7 +42,7 @@ public class HabitDbHelper extends SQLiteOpenHelper{
                 HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
                 HabitContract.HabitEntry.COLUMN_IS_GEO_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
                 HabitContract.HabitEntry.COLUMN_GEO_NOTIFICATION_LATITUDE + " REAL NOT NULL DEFAULT 100.0, " +
-                HabitContract.HabitEntry.COLUMN_GEON_NOTIFICATION_LONGITUDE + " REAL NOT NULL DEFAULT 200.0, " +
+                HabitContract.HabitEntry.COLUMN_GEO_NOTIFICATION_LONGITUDE + " REAL NOT NULL DEFAULT 200.0, " +
                 HabitContract.HabitEntry.COLUMN_DAYS_LEFT + " INTEGER DEFAULT 66);";
 
         final String SQL_CREATE_ACHIEVEMENTS = "CREATE TABLE " +

@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAWMW4aJpI-xKXhEl9LctQb1LkaGnPadT4" />
+            android:value="API_KEY" />
 
         <activity
             android:name=".MainActivity"
@@ -71,6 +71,10 @@
         <activity
             android:name=".MapActivity"
             android:screenOrientation="portrait" />
+
+        <service
+            android:name=".utilities.LocationService"/>
+
     </application>
 
 </manifest>

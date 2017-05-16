@@ -1,20 +1,17 @@
 package pl.c0.sayard.thehabitgame;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -32,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
+import pl.c0.sayard.thehabitgame.utilities.LocationService;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback{
@@ -82,6 +80,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     double latitude = position.latitude;
                     double longitude = position.longitude;
                     writeToDb(id, latitude, longitude,1);
+
+                    if(!isLocationServiceRunning(LocationService.class)){
+                        Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
+                        startService(serviceIntent);
+                        System.out.println("service started");
+                    }
+
+                    Toast.makeText(MapActivity.this, "Notification set", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
                     Toast.makeText(MapActivity.this, "Please select location with a marker", Toast.LENGTH_SHORT).show();
@@ -95,32 +101,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 if(isGeoNotificationActive == 1){
                     writeToDb(id, null, null, -1);
                     Toast.makeText(MapActivity.this, "Notification cancelled", Toast.LENGTH_SHORT).show();
+                    if(shouldStopService()){
+                        Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
+                        stopService(serviceIntent);
+                        System.out.println("service stopped");
+                    }
                     finish();
+                }else{
+                    Toast.makeText(MapActivity.this ,"No notification active", Toast.LENGTH_SHORT);
                 }
             }
         });
 
-    }
-
-    private void writeToDb(int id, Double latitude, Double longitude, int notificationActive) {
-        if(id == -1){
-            Toast.makeText(this, "Failed to create notification. Try again later.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        HabitDbHelper dbHelper = new HabitDbHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(HabitContract.HabitEntry.COLUMN_IS_GEO_NOTIFICATION_ACTIVE, notificationActive);
-        if(latitude != null)
-            contentValues.put(HabitContract.HabitEntry.COLUMN_GEO_NOTIFICATION_LATITUDE, latitude);
-        if(longitude != null)
-            contentValues.put(HabitContract.HabitEntry.COLUMN_GEON_NOTIFICATION_LONGITUDE, longitude);
-
-        db.update(HabitContract.HabitEntry.TABLE_NAME,
-                contentValues,
-                HabitContract.HabitEntry._ID + " = " + id,
-                null);
     }
 
     private Cursor getGeoNotificationData(int id) {
@@ -141,6 +133,55 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 null,
                 null);
         return cursor;
+    }
+
+    private void writeToDb(int id, Double latitude, Double longitude, int notificationActive) {
+        if(id == -1){
+            Toast.makeText(this, "Failed to create notification. Try again later.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(HabitContract.HabitEntry.COLUMN_IS_GEO_NOTIFICATION_ACTIVE, notificationActive);
+        if(latitude != null)
+            contentValues.put(HabitContract.HabitEntry.COLUMN_GEO_NOTIFICATION_LATITUDE, latitude);
+        if(longitude != null)
+            contentValues.put(HabitContract.HabitEntry.COLUMN_GEO_NOTIFICATION_LONGITUDE, longitude);
+
+        db.update(HabitContract.HabitEntry.TABLE_NAME,
+                contentValues,
+                HabitContract.HabitEntry._ID + " = " + id,
+                null);
+    }
+
+    private boolean isLocationServiceRunning(Class<?> serviceClass){
+        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)){
+            if(serviceClass.getName().equals(service.service.getClassName()))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean shouldStopService(){
+        HabitDbHelper dbHelper = new HabitDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = {
+                HabitContract.HabitEntry.COLUMN_IS_GEO_NOTIFICATION_ACTIVE
+        };
+        Cursor cursor = db.query(HabitContract.HabitEntry.TABLE_NAME,
+                columns,
+                HabitContract.HabitEntry.COLUMN_IS_GEO_NOTIFICATION_ACTIVE + " = 1",
+                null,
+                null,
+                null,
+                null);
+        if (!(cursor.moveToFirst()) || cursor.getCount() ==0)
+            return true;
+        else
+            return false;
     }
 
     @Override

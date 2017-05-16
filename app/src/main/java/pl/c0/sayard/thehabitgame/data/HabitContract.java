@@ -32,7 +32,7 @@ public final class HabitContract {
         public static final String COLUMN_SUNDAY_NOTIFICATION_HOUR = "sunday_notification_hour";
         public static final String COLUMN_IS_GEO_NOTIFICATION_ACTIVE = "is_geo_notification_active";
         public static final String COLUMN_GEO_NOTIFICATION_LATITUDE = "geo_notification_latitude";
-        public static final String COLUMN_GEON_NOTIFICATION_LONGITUDE = "geo_notification_longitude";
+        public static final String COLUMN_GEO_NOTIFICATION_LONGITUDE = "geo_notification_longitude";
     }
 
     public static class AchievementEntry implements BaseColumns{

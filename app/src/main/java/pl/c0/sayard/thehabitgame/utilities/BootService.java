@@ -44,7 +44,8 @@ public class BootService extends IntentService {
                 HabitContract.HabitEntry.COLUMN_THURSDAY_NOTIFICATION_HOUR,
                 HabitContract.HabitEntry.COLUMN_FRIDAY_NOTIFICATION_HOUR,
                 HabitContract.HabitEntry.COLUMN_SATURDAY_NOTIFICATION_HOUR,
-                HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR
+                HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR,
+                HabitContract.HabitEntry.COLUMN_IS_GEO_NOTIFICATION_ACTIVE
         };
 
         Cursor cursor = db.query(HabitContract.HabitEntry.TABLE_NAME,
