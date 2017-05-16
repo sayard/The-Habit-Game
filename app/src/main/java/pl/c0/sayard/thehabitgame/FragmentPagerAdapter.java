@@ -3,6 +3,8 @@ package pl.c0.sayard.thehabitgame;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import pl.c0.sayard.thehabitgame.achievements.AchievementListFragment;
+
 /**
  * Created by Karol on 20.04.2017.
  */

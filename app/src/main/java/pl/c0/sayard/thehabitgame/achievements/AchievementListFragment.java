@@ -1,4 +1,4 @@
-package pl.c0.sayard.thehabitgame;
+package pl.c0.sayard.thehabitgame.achievements;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pl.c0.sayard.thehabitgame.R;
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 import pl.c0.sayard.thehabitgame.data.HabitDbHelper;
 

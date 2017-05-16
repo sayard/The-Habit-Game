@@ -1,4 +1,4 @@
-package pl.c0.sayard.thehabitgame;
+package pl.c0.sayard.thehabitgame.achievements;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import pl.c0.sayard.thehabitgame.R;
 import pl.c0.sayard.thehabitgame.data.HabitContract;
 
 /**
