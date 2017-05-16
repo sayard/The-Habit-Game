@@ -156,6 +156,11 @@ public class HabitDetailActivity extends AppCompatActivity {
             intent.putExtra(this.getString(R.string.EXTRA_DETAIL_ID), detailId);
             intent.putExtra(this.getString(R.string.EXTRA_DETAIL_NAME), detailName);
             startActivity(intent);
+        }else if(id == R.id.action_map){
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra(this.getString(R.string.EXTRA_DETAIL_ID), detailId);
+            intent.putExtra(this.getString(R.string.EXTRA_DETAIL_NAME), detailName);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class HabitDbHelper extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 10;
     public static final String DATABASE_NAME = "HabitDB.db";
 
     public HabitDbHelper(Context context){
@@ -40,6 +40,9 @@ public class HabitDbHelper extends SQLiteOpenHelper{
                 HabitContract.HabitEntry.COLUMN_FRIDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
                 HabitContract.HabitEntry.COLUMN_SATURDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
                 HabitContract.HabitEntry.COLUMN_SUNDAY_NOTIFICATION_HOUR + " TEXT NOT NULL DEFAULT '15:00', " +
+                HabitContract.HabitEntry.COLUMN_IS_GEO_NOTIFICATION_ACTIVE + " BOOLEAN NOT NULL DEFAULT 0, " +
+                HabitContract.HabitEntry.COLUMN_GEO_NOTIFICATION_LATITUDE + " REAL NOT NULL DEFAULT 100.0, " +
+                HabitContract.HabitEntry.COLUMN_GEO_NOTIFICATION_LONGITUDE + " REAL NOT NULL DEFAULT 200.0, " +
                 HabitContract.HabitEntry.COLUMN_DAYS_LEFT + " INTEGER DEFAULT 66);";
 
         final String SQL_CREATE_ACHIEVEMENTS = "CREATE TABLE " +
