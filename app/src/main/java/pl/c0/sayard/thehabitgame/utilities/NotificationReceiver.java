@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -70,7 +71,9 @@ public class NotificationReceiver extends BroadcastReceiver{
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(android.R.drawable.arrow_up_float)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                        R.drawable.notification_icon))
                 .setContentTitle(title)
                 .setContentText("It's time for " + title)
                 .setVibrate(new long[] { 250, 250, 250, 250, 250 })

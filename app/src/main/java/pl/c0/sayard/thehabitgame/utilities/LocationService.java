@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -139,7 +140,9 @@ public class LocationService extends Service {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(android.R.drawable.arrow_up_float)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
+                        R.drawable.notification_icon))
                 .setContentTitle(title)
                 .setContentText("It's time for " + title)
                 .setVibrate(new long[] { 250, 250, 250, 250, 250 })
